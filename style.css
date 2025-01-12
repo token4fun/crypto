@@ -16,6 +16,8 @@ header {
     display: flex;
     justify-content: space-between;
     margin: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para a container */
+    border-radius: 10px;
 }
 
 .content {
@@ -25,6 +27,7 @@ header {
     flex: 1;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    transition: all 0.3s ease; /* Transição para efeito de hover */
 }
 
 .content h2 {
@@ -34,6 +37,13 @@ header {
 .content p {
     font-size: 16px;
     color: #666;
+}
+
+.content:hover {
+    transform: translateY(-5px); /* Eleva o div quando o mouse passa sobre */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao passar o mouse */
+    cursor: pointer; /* Altera o cursor para pointer */
+    background-color: #f9f9f9; /* Leve mudança na cor de fundo */
 }
 
 .footer {
@@ -52,7 +62,7 @@ header {
     text-decoration: underline;
 }
 
-/* Responsive Design */
+/* Responsividade */
 @media (max-width: 768px) {
     .content-container {
         flex-direction: column;
