@@ -168,9 +168,9 @@ p {
 }
 
 .banner-container img {
-    width: 100%;
-    max-width: 1024px;
-    height: auto;
+    width: 100%; /* Ajusta a largura da imagem para 100% */
+    max-width: 1024px; /* Limita a largura máxima da imagem */
+    height: auto; /* Mantém a proporção da altura automaticamente */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: opacity 0.9s ease;
@@ -201,7 +201,22 @@ p {
 .banner-nav button:focus {
     outline: none;
 }
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 768px) {
+    .banner-container img {
+        max-width: 100%; /* Ajusta a imagem para ocupar toda a largura da tela em dispositivos menores */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+
+    .banner-nav button {
+        font-size: 16px; /* Ajusta o tamanho das setas para dispositivos menores */
+        padding: 8px; /* Reduz o tamanho das setas */
+    }
+}
+
 /* Fim banner rotativo */
+
 
 /* Começo botão hover */
 .contact-button {
