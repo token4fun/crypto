@@ -7,38 +7,39 @@ body {
 
 header {
     display: flex;
-    justify-content: space-between; /* Espaço entre logo e texto */
-    align-items: center; /* Alinha logo e texto verticalmente */
-    padding: 20px;
+    justify-content: center; /* Centraliza o conteúdo */
+    align-items: center; /* Alinha o conteúdo verticalmente */
+    padding: 50px;
     background-color: #4CAF50;
     color: white;
-    max-width: 1200px; /* Limita a largura para não esticar muito */
-    margin: 0 auto; /* Centraliza o conteúdo */
-}
-
-.logo-container {
-    flex: 0 0 auto; /* Logo não cresce, ocupa apenas o espaço necessário */
-    margin-right: 20px; /* Espaço à direita da logo */
-}
-
-.logo {
-    width: 60px; /* Tamanho da logo (ajuste conforme necessário) */
-    height: auto;
 }
 
 .text-container {
-    flex: 1; /* Faz o texto ocupar o restante do espaço disponível */
+    position: relative; /* Necessário para posicionar a logo dentro dessa área */
     text-align: center; /* Centraliza o texto */
+}
+
+.logo {
+    position: absolute; /* Posiciona a logo dentro do texto */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta para garantir que a logo fique exatamente no centro */
+    opacity: 0.1; /* Deixa a logo mais clara */
+    z-index: -1; /* Coloca a logo atrás do texto */
+    width: 150px; /* Tamanho ajustável da logo */
+    height: auto;
 }
 
 h1 {
     margin: 0;
     font-size: 36px;
+    position: relative; /* Necessário para que o texto fique sobre a logo */
 }
 
 p {
     margin: 5px 0 0 0;
     font-size: 18px;
+    position: relative; /* Necessário para que o texto fique sobre a logo */
 }
 
 .content-container {
@@ -99,7 +100,7 @@ p {
     }
 
     .logo {
-        width: 50px; /* Logo um pouco menor em dispositivos menores */
+        width: 100px; /* Logo um pouco menor em dispositivos menores */
     }
 
     .content-container {
