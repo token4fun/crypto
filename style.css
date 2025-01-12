@@ -242,7 +242,7 @@ p {
 .wallet-btn {
     background-color: #FFA500; /* Laranja */
     color: black; /* Texto preto */
-    padding: 12px 24px; /* Espaçamento interno ajustado */
+    padding: 12px 24px; /* Espaçamento interno */
     text-decoration: none; /* Remove o sublinhado */
     border-radius: 5px; /* Bordas arredondadas */
     font-size: 16px;
