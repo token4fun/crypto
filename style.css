@@ -153,3 +153,52 @@ p {
         margin-bottom: 10px;
     }
 }
+
+
+
+/* Começo banner rotativo */
+.banner-container {
+    position: relative;
+    max-width: 100%;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.banner-container img {
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.9s ease;
+}
+
+.banner-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.banner-nav button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
+}
+
+.banner-nav button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.banner-nav button:focus {
+    outline: none;
+}
+/* Fim banner rotativo */
