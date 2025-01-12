@@ -61,3 +61,15 @@ window.onload = function () {
     if (prevButton) prevButton.addEventListener('click', prevBanner);
     if (nextButton) nextButton.addEventListener('click', nextBanner);
 };
+
+function copyToClipboard(walletAddress) {
+    // Cria um elemento de input temporário
+    const tempInput = document.createElement('input');
+    tempInput.value = walletAddress; // Define o valor como o endereço da carteira
+    document.body.appendChild(tempInput); // Adiciona ao DOM
+    tempInput.select(); // Seleciona o conteúdo
+    document.execCommand('copy'); // Executa o comando de cópia
+    document.body.removeChild(tempInput); // Remove o input temporário
+
+    alert('Wallet address copied to clipboard: ' + walletAddress); // Exibe um alerta informando que o endereço foi copiado
+}
