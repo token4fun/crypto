@@ -111,3 +111,45 @@ p {
         margin: 10px 0;
     }
 }
+/* Estilo para os links de redes sociais */
+.social-links {
+    text-align: center; /* Centraliza o conteúdo */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.social-links h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icon {
+    width: 40px; /* Ajuste o tamanho dos ícones */
+    height: auto;
+    transition: transform 0.3s ease; /* Efeito ao passar o mouse */
+}
+
+.social-icon:hover {
+    transform: scale(1.1); /* Aumenta o ícone ao passar o mouse */
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 768px) {
+    .social-icons {
+        flex-direction: column;
+    }
+
+    .social-icon {
+        width: 50px; /* Aumenta o tamanho do ícone em dispositivos menores */
+        margin-bottom: 10px;
+    }
+}
