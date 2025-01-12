@@ -242,7 +242,7 @@ p {
 .wallet-btn {
     background-color: #FFA500; /* Laranja */
     color: black; /* Texto preto */
-    padding: 10px 20px; /* Espaçamento interno */
+    padding: 12px 24px; /* Espaçamento interno ajustado */
     text-decoration: none; /* Remove o sublinhado */
     border-radius: 5px; /* Bordas arredondadas */
     font-size: 16px;
@@ -252,6 +252,10 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra leve */
     transition: all 0.3s ease; /* Transições suaves */
     margin-top: 10px;
+    width: auto; /* Garantir que a largura seja automática */
+    max-width: 100%; /* Para garantir que o botão não ultrapasse a largura disponível */
+    display: inline-block; /* Faz o botão ocupar somente o espaço necessário */
+    text-align: center; /* Centraliza o texto no botão */
 }
 
 .wallet-btn:hover {
@@ -262,5 +266,21 @@ p {
 
 .wallet-btn:focus {
     outline: none; /* Remove o contorno de foco */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .wallet-btn {
+        font-size: 14px; /* Reduz o tamanho da fonte em dispositivos menores */
+        padding: 10px 20px; /* Ajusta o espaçamento para telas menores */
+        width: 100%; /* Faz o botão ocupar toda a largura disponível em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .wallet-btn {
+        font-size: 12px; /* Tamanho da fonte menor para dispositivos ainda menores */
+        padding: 8px 16px; /* Ajuste do espaçamento interno */
+    }
 }
 /* Final carteira clicável */
