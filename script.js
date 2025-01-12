@@ -73,3 +73,19 @@ function copyToClipboard(walletAddress) {
 
     alert('Wallet address copied! Please send the agreed amount to: ' + walletAddress); // Exibe um alerta informando que o endereço foi copiado
 }
+
+
+// Função para alterar o texto ao passar o mouse
+function changeText(button, walletAddress) {
+    button.innerHTML = walletAddress; // Altera o texto para o endereço da carteira
+}
+
+// Função para restaurar o texto ao retirar o mouse
+function resetText(button) {
+    // Restaura o texto original
+    if (button.innerHTML.includes('USDT') || button.innerHTML.includes('ETH') || button.innerHTML.includes('BNB')) {
+        button.innerHTML = '(<strong>USDT</strong>, <strong>ETH</strong>, or <strong>BNB</strong>)';
+    } else if (button.innerHTML.includes('SOL')) {
+        button.innerHTML = '(<strong>SOL</strong>)';
+    }
+}
