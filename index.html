@@ -71,11 +71,16 @@
     <p>You can make your payment for our services using crypto, providing flexibility and security for your transaction. 
     Click on the crypto to copy the wallet.
     <br><br>
-    <button class="wallet-btn" onclick="copyToClipboard('0xf4BD092977B3572216569Bf71493a5d32CAc8f86')">(<strong>USDT</strong>, <strong>ETH</strong>, or <strong>BNB</strong>)</button>
+    <button class="wallet-btn" 
+            onmouseover="changeText(this, '0xf4BD092977B3572216569Bf71493a5d32CAc8f86')" 
+            onmouseout="resetText(this)">(<strong>USDT</strong>, <strong>ETH</strong>, or <strong>BNB</strong>)</button>
     <br>
-    <button class="wallet-btn" onclick="copyToClipboard('4FGfBFXkBNKrjmjxgxRnrYojpZZLRKW439vwYU6sHXYX')">(<strong>SOL</strong>)</button>
+    <button class="wallet-btn" 
+            onmouseover="changeText(this, '4FGfBFXkBNKrjmjxgxRnrYojpZZLRKW439vwYU6sHXYX')" 
+            onmouseout="resetText(this)">(<strong>SOL</strong>)</button>
     </p> 
 </div>
+
 
 </div>
 
