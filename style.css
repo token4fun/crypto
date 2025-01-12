@@ -72,7 +72,7 @@ p {
     transform: translateY(-5px); /* Eleva o div quando o mouse passa sobre */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao passar o mouse */
     cursor: pointer; /* Altera o cursor para pointer */
-    background-color: #f9f9f9; /* Leve mudança na cor de fundo */
+    background-color: #ADD8E6; /* Azul claro no fundo ao passar o mouse */
 }
 
 .footer {
