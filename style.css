@@ -12,14 +12,17 @@ header {
     padding: 20px;
     background-color: #4CAF50;
     color: white;
+    max-width: 1200px; /* Limita a largura para não esticar muito */
+    margin: 0 auto; /* Centraliza o conteúdo */
 }
 
 .logo-container {
     flex: 0 0 auto; /* Logo não cresce, ocupa apenas o espaço necessário */
+    margin-right: 20px; /* Espaço à direita da logo */
 }
 
 .logo {
-    width: 50px; /* Tamanho da logo (ajuste conforme necessário) */
+    width: 60px; /* Tamanho da logo (ajuste conforme necessário) */
     height: auto;
 }
 
@@ -96,7 +99,7 @@ p {
     }
 
     .logo {
-        width: 40px; /* Logo um pouco menor em dispositivos menores */
+        width: 50px; /* Logo um pouco menor em dispositivos menores */
     }
 
     .content-container {
