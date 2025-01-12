@@ -71,5 +71,5 @@ function copyToClipboard(walletAddress) {
     document.execCommand('copy'); // Executa o comando de cópia
     document.body.removeChild(tempInput); // Remove o input temporário
 
-    alert('The wallet address has been copied to your clipboard. Please send the amount you have agreed upon with the team to: ' + walletAddress); // Exibe um alerta informando que o endereço foi copiado
+    alert('Wallet address copied! Please send the agreed amount to: ' + walletAddress); // Exibe um alerta informando que o endereço foi copiado
 }
