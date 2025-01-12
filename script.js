@@ -62,30 +62,24 @@ window.onload = function () {
     if (nextButton) nextButton.addEventListener('click', nextBanner);
 };
 
+// Função para copiar o endereço da carteira
 function copyToClipboard(walletAddress) {
-    // Cria um elemento de input temporário
     const tempInput = document.createElement('input');
-    tempInput.value = walletAddress; // Define o valor como o endereço da carteira
-    document.body.appendChild(tempInput); // Adiciona ao DOM
-    tempInput.select(); // Seleciona o conteúdo
-    document.execCommand('copy'); // Executa o comando de cópia
-    document.body.removeChild(tempInput); // Remove o input temporário
+    tempInput.value = walletAddress;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
 
-    alert('Wallet address copied! Please send the agreed amount to: ' + walletAddress); // Exibe um alerta informando que o endereço foi copiado
+    alert('Wallet address copied! Please send the agreed amount to: ' + walletAddress);
 }
-
 
 // Função para alterar o texto ao passar o mouse
 function changeText(button, walletAddress) {
     button.innerHTML = walletAddress; // Altera o texto para o endereço da carteira
 }
 
-// Função para restaurar o texto ao retirar o mouse
-function resetText(button) {
-    // Restaura o texto original
-    if (button.innerHTML.includes('USDT') || button.innerHTML.includes('ETH') || button.innerHTML.includes('BNB')) {
-        button.innerHTML = '(<strong>USDT</strong>, <strong>ETH</strong>, or <strong>BNB</strong>)';
-    } else if (button.innerHTML.includes('SOL')) {
-        button.innerHTML = '(<strong>SOL</strong>)';
-    }
+// Função para restaurar o texto original ao retirar o mouse
+function resetText(button, originalText) {
+    button.innerHTML = originalText; // Restaura o texto original
 }
