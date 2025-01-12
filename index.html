@@ -73,19 +73,22 @@
     <br><br>
     <button class="wallet-btn" 
             onmouseover="changeText(this, '0xf4BD092977B3572216569Bf71493a5d32CAc8f86')" 
-            onmouseout="resetText(this)">(<strong>USDT</strong>, <strong>ETH</strong>, or <strong>BNB</strong>)</button>
+            onmouseout="resetText(this, '(<strong>USDT</strong>, <strong>ETH</strong>, or <strong>BNB</strong>)')" 
+            onclick="copyToClipboard('0xf4BD092977B3572216569Bf71493a5d32CAc8f86')">
+        (<strong>USDT</strong>, <strong>ETH</strong>, or <strong>BNB</strong>)
+    </button>
     <br>
     <button class="wallet-btn" 
             onmouseover="changeText(this, '4FGfBFXkBNKrjmjxgxRnrYojpZZLRKW439vwYU6sHXYX')" 
-            onmouseout="resetText(this)">(<strong>SOL</strong>)</button>
+            onmouseout="resetText(this, '(<strong>SOL</strong>)')" 
+            onclick="copyToClipboard('4FGfBFXkBNKrjmjxgxRnrYojpZZLRKW439vwYU6sHXYX')">
+        (<strong>SOL</strong>)
+    </button>
     </p> 
 </div>
 
-
 </div>
 
-    
-    
 <div class="content-container">
     <div class="content social-links">
         <h2>Follow Us on Social Media</h2>
