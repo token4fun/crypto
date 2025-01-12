@@ -237,3 +237,30 @@ p {
     background-color: #FF8C00; /* Cor de fundo laranja mais escura ao passar o mouse */
 }
 /* FInal botão hover */
+
+/* Inicio carteira clicável */
+.wallet-btn {
+    background-color: #FFA500; /* Laranja */
+    color: black; /* Texto preto */
+    padding: 10px 20px; /* Espaçamento interno */
+    text-decoration: none; /* Remove o sublinhado */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra leve */
+    transition: all 0.3s ease; /* Transições suaves */
+    margin-top: 10px;
+}
+
+.wallet-btn:hover {
+    transform: scale(1.1); /* Aumenta o tamanho do botão ao passar o mouse */
+    background-color: #FF8C00; /* Cor de fundo laranja mais escura */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Sombra mais escura */
+}
+
+.wallet-btn:focus {
+    outline: none; /* Remove o contorno de foco */
+}
+/* Final carteira clicável */
