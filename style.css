@@ -24,7 +24,7 @@ header {
     top: 50%; /* Centraliza verticalmente */
     left: 50%; /* Centraliza horizontalmente */
     transform: translate(-50%, -50%); /* Ajusta para garantir que a logo fique exatamente no centro */
-    opacity: 0.1; /* Deixa a logo mais clara */
+    opacity: 0.4; /* Deixa a logo mais clara */
     z-index: -1; /* Coloca a logo atrás do texto */
     width: 150px; /* Tamanho ajustável da logo */
     height: auto;
