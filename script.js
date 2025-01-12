@@ -75,12 +75,12 @@ function copyToClipboard(button, walletAddress) {
     const buttonText = button.innerText || button.textContent; // Obtém o texto do botão
     
     // Mostrar a mensagem de alerta
-    alert('You chose: ' + buttonText + '\nWallet address copied! Please send the agreed amount to:\n ' + walletAddress);
+    alert('Payment in: ' + buttonText + '\nWallet address copied! Please send the agreed amount to:\n\n ' + walletAddress);
 }
 
 // Função para alterar o texto ao passar o mouse
-function changeText(button, walletAddress) {
-    button.innerHTML = walletAddress; // Altera o texto para o endereço da carteira
+function hoverText(button, walletText) {
+    button.innerHTML = `(<strong>${walletText}</strong>)`; // Altera o texto para a criptomoeda durante o hover
 }
 
 // Função para restaurar o texto original ao retirar o mouse
