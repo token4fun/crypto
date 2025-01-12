@@ -256,6 +256,7 @@ p {
     max-width: 100%; /* Para garantir que o botão não ultrapasse a largura disponível */
     display: inline-block; /* Faz o botão ocupar somente o espaço necessário */
     text-align: center; /* Centraliza o texto no botão */
+    transform-origin: center center; /* Foca o ponto de transformação no centro do botão */
 }
 
 .wallet-btn span {
