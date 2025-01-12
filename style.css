@@ -202,3 +202,23 @@ p {
     outline: none;
 }
 /* Fim banner rotativo */
+
+/* Começo botão hover */
+.contact-button {
+    color: black; /* Cor do texto do botão */
+    background-color: #FFA500; /* Cor de fundo laranja */
+    padding: 10px 20px; /* Espaçamento interno */
+    text-decoration: none; /* Remove o sublinhado do link */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito nas letras */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra leve ao redor do botão */
+    transition: all 0.3s ease; /* Transições suaves para o efeito hover */
+}
+
+.contact-button:hover {
+    transform: scale(1.1); /* Aumenta o botão ao passar o mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Sombra mais escura */
+    background-color: #FF8C00; /* Cor de fundo laranja mais escura ao passar o mouse */
+}
+/* FInal botão hover */
