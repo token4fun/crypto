@@ -5,45 +5,37 @@ body {
     padding: 0;
 }
 
-header {
-    text-align: center;
-    padding: 50px;
+.header {
+    display: flex;
+    justify-content: space-between; /* Espaço entre logo e texto */
+    align-items: center; /* Alinha logo e texto verticalmente */
+    padding: 20px;
     background-color: #4CAF50;
     color: white;
 }
 
-.content-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para a container */
-    border-radius: 10px;
+.logo-container {
+    flex: 0 0 auto; /* Logo não cresce, ocupa apenas o espaço necessário */
 }
 
-.content {
-    background: white;
-    padding: 20px;
-    margin: 10px;
-    flex: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    transition: all 0.3s ease; /* Transição para efeito de hover */
+.logo {
+    width: 50px; /* Tamanho da logo (ajuste conforme necessário) */
+    height: auto;
 }
 
-.content h2 {
-    color: #333;
+.text-container {
+    flex: 1; /* Faz o texto ocupar o restante do espaço disponível */
+    text-align: center; /* Centraliza o texto */
 }
 
-.content p {
-    font-size: 16px;
-    color: #666;
+h1 {
+    margin: 0;
+    font-size: 36px;
 }
 
-.content:hover {
-    transform: translateY(-5px); /* Eleva o div quando o mouse passa sobre */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao passar o mouse */
-    cursor: pointer; /* Altera o cursor para pointer */
-    background-color: #ADD8E6; /* Azul claro no fundo ao passar o mouse */
+p {
+    margin: 5px 0 0 0;
+    font-size: 18px;
 }
 
 .footer {
@@ -64,11 +56,16 @@ header {
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .content-container {
+    .header {
         flex-direction: column;
+        text-align: center; /* Centraliza o conteúdo em dispositivos menores */
     }
 
-    .content {
-        margin: 10px 0;
+    .logo {
+        width: 40px; /* Logo um pouco menor em dispositivos menores */
+    }
+
+    .text-container {
+        margin-top: 10px;
     }
 }
