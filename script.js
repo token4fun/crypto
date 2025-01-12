@@ -75,7 +75,7 @@ function copyToClipboard(button, walletAddress) {
     const buttonText = button.innerText || button.textContent; // Obtém o texto do botão
     
     // Mostrar a mensagem de alerta
-    alert('Payment in: ' + buttonText + '\nWallet address copied! Please send the agreed amount to:\n\n ' + walletAddress);
+    alert('Payment in: ' + buttonText + '\n\nWallet address copied! \n\nPlease send the agreed amount to:\n\n ' + walletAddress);
 }
 
 // Função para alterar o texto ao passar o mouse
