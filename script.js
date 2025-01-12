@@ -63,7 +63,7 @@ window.onload = function () {
 };
 
 // Função para copiar o endereço da carteira
-function copyToClipboard(walletAddress) {
+function copyToClipboard(button, walletAddress) {
     const tempInput = document.createElement('input');
     tempInput.value = walletAddress;
     document.body.appendChild(tempInput);
@@ -71,7 +71,11 @@ function copyToClipboard(walletAddress) {
     document.execCommand('copy');
     document.body.removeChild(tempInput);
 
-    alert('Wallet address copied! Please send the agreed amount to: ' + walletAddress);
+    // Obter o texto do botão
+    const buttonText = button.innerText || button.textContent; // Obtém o texto do botão
+    
+    // Mostrar a mensagem de alerta
+    alert('You chose: ' + buttonText + '\nWallet address copied! Please send the agreed amount to: ' + walletAddress);
 }
 
 // Função para alterar o texto ao passar o mouse
