@@ -85,7 +85,7 @@ function copyToClipboard(button, walletKey) {
     const buttonText = button.innerText || button.textContent; 
 
     // Mostrar a mensagem de alerta com o nome da criptomoeda e o endereço da wallet
-    alert('\nYou chose: ' + buttonText 'Wallet' + '\n\nWallet address copied to clipboard!\n\nSend the agreed amount to:\n\n ' + walletAddress);
+    alert('\nYou chose: ' + buttonText + 'Wallet' + '\n\nWallet address copied to clipboard!\n\nSend the agreed amount to:\n\n ' + walletAddress);
 }
 
 // Função para alterar o texto ao passar o mouse
