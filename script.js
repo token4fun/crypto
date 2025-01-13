@@ -80,10 +80,12 @@ function copyToClipboard(button, walletAddress) {
 
 // Função para alterar o texto ao passar o mouse
 function hoverText(button, walletText) {
-    button.innerHTML = `(<strong>${walletText}</strong>)`; // Altera o texto para a criptomoeda durante o hover
+    const span = button.querySelector('span'); // Seleciona o <span> dentro do botão
+    span.innerHTML = walletText; // Altera o texto do <span> durante o hover
 }
 
 // Função para restaurar o texto original ao retirar o mouse
 function resetText(button, originalText) {
-    button.innerHTML = originalText; // Restaura o texto original
+    const span = button.querySelector('span'); // Seleciona o <span> dentro do botão
+    span.innerHTML = originalText; // Restaura o texto original
 }
