@@ -70,8 +70,10 @@ const wallets = {
 
 // Função para copiar o endereço da carteira
 function copyToClipboard(button, walletKey) {
-    const walletAddress = wallets[walletKey]; // Obtém o endereço da carteira através da chave
+    // Acessa o endereço da carteira usando a chave
+    const walletAddress = wallets[walletKey]; 
 
+    // Cria um campo temporário para copiar o valor
     const tempInput = document.createElement('input');
     tempInput.value = walletAddress;
     document.body.appendChild(tempInput);
@@ -79,11 +81,11 @@ function copyToClipboard(button, walletKey) {
     document.execCommand('copy');
     document.body.removeChild(tempInput);
 
-    // Obter o texto do botão
-    const buttonText = button.innerText || button.textContent; // Obtém o texto do botão
-    
-    // Mostrar a mensagem de alerta
-    alert('Payment in: ' + buttonText + '\n\nWallet address copied! \n\nPlease send the agreed amount to:\n\n ' + walletAddress);
+    // Obter o texto do botão (nome da criptomoeda)
+    const buttonText = button.innerText || button.textContent; 
+
+    // Mostrar a mensagem de alerta com o nome da criptomoeda e o endereço da wallet
+    alert('You chose: ' + buttonText + '\nWallet address copied!\n\nPlease send the agreed amount to:\n\n ' + walletAddress);
 }
 
 // Função para alterar o texto ao passar o mouse
