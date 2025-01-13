@@ -62,8 +62,16 @@ window.onload = function () {
     if (nextButton) nextButton.addEventListener('click', nextBanner);
 };
 
+// Variáveis contendo os endereços das carteiras
+const wallets = {
+    usdtEthBnbWallet: '0xf4BD092977B3572216569Bf71493a5d32CAc8f86',
+    solWallet: '4FGfBFXkBNKrjmjxgxRnrYojpZZLRKW439vwYU6sHXYX'
+};
+
 // Função para copiar o endereço da carteira
-function copyToClipboard(button, walletAddress) {
+function copyToClipboard(button, walletKey) {
+    const walletAddress = wallets[walletKey]; // Obtém o endereço da carteira através da chave
+
     const tempInput = document.createElement('input');
     tempInput.value = walletAddress;
     document.body.appendChild(tempInput);
