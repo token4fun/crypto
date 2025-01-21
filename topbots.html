@@ -16,10 +16,8 @@
 
         /* Ticker de Criptomoedas */
         .crypto-ticker {
-            display: flex;
-            align-items: center;
+            width: 100%;
             overflow: hidden;
-            white-space: nowrap;
             background: rgba(255, 142, 83, 0.2);
             padding: 15px 0;
             font-size: 18px;
@@ -27,22 +25,9 @@
             font-weight: bold;
         }
 
-        .crypto-item {
-            display: flex;
-            align-items: center;
-            margin-right: 30px;
-        }
-
-        .crypto-item img {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-        }
-
-        .crypto-item .sparkline {
-            width: 100px;
-            height: 30px;
-            margin-left: 8px;
+        .crypto-ticker marquee {
+            font-size: 20px;
+            font-weight: bold;
         }
 
         /* Estilo do Título */
@@ -53,6 +38,68 @@
             margin-top: 20px;
             color: #ff8e53;
             text-shadow: 0 0 20px rgba(255, 142, 83, 0.8);
+        }
+
+        /* Seções dos bots */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .bot-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            border: 2px solid #ff8e53;
+            transition: all 0.4s ease;
+        }
+
+        .bot-section:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+        }
+
+        .bot-section img {
+            max-width: 150px;
+            border-radius: 15px;
+            border: 3px solid #ff8e53;
+        }
+
+        .bot-info {
+            flex: 1;
+            padding-left: 30px;
+        }
+
+        .bot-info h2 {
+            font-size: 28px;
+            color: #ff8e53;
+        }
+
+        .bot-info p {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .bot-link {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #ff8e53, #ff6b6b);
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .bot-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 142, 83, 0.8);
         }
 
         /* Botão de Contato no Telegram */
@@ -89,8 +136,8 @@
 <body>
 
     <!-- Ticker de Criptomoedas -->
-    <div class="crypto-ticker" id="crypto-ticker">
-        Loading cryptocurrency data...
+    <div class="crypto-ticker">
+        <marquee id="crypto-prices">Loading cryptocurrency prices...</marquee>
     </div>
 
     <h1 class="page-title">TOP SNIPER & TRADING BOTS ON TELEGRAM</h1>
@@ -109,31 +156,13 @@
         <div class="bot-section">
             <img src="bot2.jpg" alt="Bot 2">
             <div class="bot-info">
-                <h2>Bot XXXXX</h2>
-                <p>Smart trading with AI-powered analytics.</p>
-                <a href="https://t.me/trademasterai" class="bot-link" onclick="sendNotification('TradeMaster AI')">Explore</a>
-            </div>
-        </div>
-
-          <div class="bot-section">
-            <img src="bot2.jpg" alt="Bot 2">
-            <div class="bot-info">
-                <h2>BOT CJHJC</h2>
-                <p>Smart trading with AI-powered analytics.</p>
-                <a href="https://t.me/trademasterai" class="bot-link" onclick="sendNotification('TradeMaster AI')">Explore</a>
-            </div>
-        </div>
-
-          <div class="bot-section">
-            <img src="bot2.jpg" alt="Bot 2">
-            <div class="bot-info">
-                <h2>BOT FGKLH LKD</h2>
+                <h2>TradeMaster AI</h2>
                 <p>Smart trading with AI-powered analytics.</p>
                 <a href="https://t.me/trademasterai" class="bot-link" onclick="sendNotification('TradeMaster AI')">Explore</a>
             </div>
         </div>
     </div>
-    
+
     <!-- Botão de Contato no Telegram -->
     <a href="https://t.me/Marcelo_VP" class="telegram-btn">@Marcelo_VP</a>
 
@@ -144,67 +173,30 @@
 
     <!-- Scripts -->
     <script>
-        // Função para buscar preços das criptomoedas com sparklines e setas de tendência
         async function fetchCryptoPrices() {
             try {
-                const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,dogecoin,solana&sparkline=true');
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,dogecoin,solana&vs_currencies=usd&include_24hr_change=true');
                 const data = await response.json();
 
-                let tickerHTML = '';
-                data.forEach(crypto => {
-                    const trend = crypto.price_change_percentage_24h > 0 ? '🔺' : '🔻';
-                    tickerHTML += `
-                        <div class="crypto-item">
-                            <img src="${crypto.image}" alt="${crypto.name}">
-                            <span>${crypto.name}: $${crypto.current_price.toFixed(2)} ${trend}</span>
-                            <canvas class="sparkline" id="sparkline-${crypto.id}"></canvas>
-                        </div>
-                    `;
-                });
-
-                document.getElementById('crypto-ticker').innerHTML = tickerHTML;
-
-                // Desenhar sparklines
-                data.forEach(crypto => {
-                    const ctx = document.getElementById(`sparkline-${crypto.id}`).getContext('2d');
-                    const sparklineData = crypto.sparkline_in_7d.price;
-                    drawSparkline(ctx, sparklineData);
-                });
-
+                let prices = `
+                    Bitcoin: $${data.bitcoin.usd} (${data.bitcoin.usd_24h_change.toFixed(2)}%) | 
+                    Ethereum: $${data.ethereum.usd} (${data.ethereum.usd_24h_change.toFixed(2)}%) | 
+                    Binance Coin: $${data.binancecoin.usd} (${data.binancecoin.usd_24h_change.toFixed(2)}%) | 
+                    Dogecoin: $${data.dogecoin.usd} (${data.dogecoin.usd_24h_change.toFixed(2)}%) | 
+                    Solana: $${data.solana.usd} (${data.solana.usd_24h_change.toFixed(2)}%)
+                `;
+                document.getElementById('crypto-prices').textContent = prices;
             } catch (error) {
-                document.getElementById('crypto-ticker').innerHTML = 'Failed to load crypto prices.';
-                console.error('Error fetching crypto prices:', error);
+                document.getElementById('crypto-prices').textContent = 'Failed to load crypto prices.';
             }
-        }
-
-        // Função para desenhar sparklines
-        function drawSparkline(ctx, data) {
-            ctx.strokeStyle = '#ff8e53';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            data.forEach((price, index) => {
-                const x = (index / data.length) * ctx.canvas.width;
-                const y = ctx.canvas.height - (price / Math.max(...data)) * ctx.canvas.height;
-                if (index === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            });
-            ctx.stroke();
         }
 
         fetchCryptoPrices();
-        setInterval(fetchCryptoPrices, 60000); // Atualiza os preços a cada 60 segundos
+        setInterval(fetchCryptoPrices, 60000);
 
-        // Contador de visitas
-        document.addEventListener("DOMContentLoaded", function() {
-            let visits = localStorage.getItem('visitCount');
-            if (!visits) {
-                visits = 1;
-            } else {
-                visits = parseInt(visits) + 1;
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            let visits = localStorage.getItem('visitCount') || 0;
+            visits++;
             localStorage.setItem('visitCount', visits);
             document.getElementById('visit-count').textContent = visits;
         });
