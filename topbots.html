@@ -64,11 +64,12 @@ body {
         }
 
         /* Efeito de flutuação para a logo */
-        .floating-logo {
-            width: 200px;
-            height: auto;
-            animation: float 3s ease-in-out infinite, neon-glow-greem 1.5s infinite alternate;
-        }
+.floating-logo {
+    width: 200px;
+    height: auto;
+    animation: float 3s ease-in-out infinite, neon-glow-green 1.5s infinite alternate;
+    filter: drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00) drop-shadow(0 0 30px #39ff14);
+}
 
                 /* Botões com efeito de neon */
         .btn {
@@ -204,17 +205,28 @@ body {
             }
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
+/* Animação de flutuação */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Animação de brilho neon */
+@keyframes neon-glow-green {
+    from {
+        filter: drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00) drop-shadow(0 0 30px #39ff14);
+    }
+    to {
+        filter: drop-shadow(0 0 20px #00ff00) drop-shadow(0 0 40px #39ff14) drop-shadow(0 0 60px #00ff00);
+    }
+}
 
     </style>
 </head>
@@ -228,7 +240,7 @@ body {
 </div>
 
     <!-- Título com efeito neon -->
-    <h1 class="page-title">TOP SNIPER & TRADING BOTS</h1>
+    <h1 class="page-title"Telegram >TELEGRAM TOP SNIPER & TRADING BOTS</h1>
 
     <!-- Subtítulo com efeito neon verde -->
     <p class="page-description">
@@ -236,7 +248,7 @@ body {
     </p>
 
     <!-- Logo com efeito de flutuação -->
-    <img src="topbot.png" alt="Floating Logo" class="floating-logo">
+    <img src="topbot.png" alt="TopBot Logo" class="floating-logo">
 
     <!-- Botões -->
     <div>
