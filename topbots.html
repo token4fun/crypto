@@ -186,24 +186,25 @@ body {
 
 
         
-        /* Animações */
-        @keyframes neon-glow {
-            from {
-                text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff4500, 0 0 30px #ff8c00;
-            }
-            to {
-                text-shadow: 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 60px #ff4500;
-            }
-        }
+/* Animação de brilho neon para texto laranja */
+@keyframes neon-glow {
+    from {
+        text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff4500, 0 0 30px #ff8c00;
+    }
+    to {
+        text-shadow: 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 60px #ff4500;
+    }
+}
 
-        @keyframes neon-glow-green {
-            from {
-                text-shadow: 0 0 10px #39ff14, 0 0 20px #00ff00, 0 0 30px #39ff14;
-            }
-            to {
-                text-shadow: 0 0 20px #00ff00, 0 0 40px #39ff14, 0 0 60px #00ff00;
-            }
-        }
+/* Animação de brilho neon para texto verde */
+@keyframes neon-glow-green {
+    from {
+        text-shadow: 0 0 10px #39ff14, 0 0 20px #00ff00, 0 0 30px #39ff14;
+    }
+    to {
+        text-shadow: 0 0 20px #00ff00, 0 0 40px #39ff14, 0 0 60px #00ff00;
+    }
+}
 
 /* Animação de flutuação */
 @keyframes float {
@@ -218,17 +219,26 @@ body {
     }
 }
 
-/* Animação de brilho neon */
+/* Animação de brilho neon verde para elementos (logo por exemplo) */
 @keyframes neon-glow-green {
-from {
-    filter: drop-shadow(0 0 5px #00f0ff) drop-shadow(0 0 10px #0077ff) drop-shadow(0 0 15px #00f0ff);
-}
-to {
-    filter: drop-shadow(0 0 10px #0077ff) drop-shadow(0 0 20px #00f0ff) drop-shadow(0 0 30px #0077ff);
+    from {
+        filter: drop-shadow(0 0 2px #39ff14) drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14);
+    }
+    to {
+        filter: drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00);
+    }
 }
 
-
+/* Animação de brilho neon azul para elementos (logo por exemplo) */
+@keyframes neon-glow-blue {
+    from {
+        filter: drop-shadow(0 0 2px #00f0ff) drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff);
+    }
+    to {
+        filter: drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 20px #0077ff);
+    }
 }
+
 
     </style>
 </head>
