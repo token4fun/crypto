@@ -30,6 +30,15 @@
     border-bottom: 2px solid #ff8e53; /* Linha de destaque */
 }
 
+    /* Estiliza valores positivos em azul */
+    .positive {
+        color: #00ffcc;  /* Azul ciano */
+    }
+
+    /* Estiliza valores negativos em vermelho */
+    .negative {
+        color: #ff4c4c;  /* Vermelho vibrante */
+    }
 
         /* Estilo do Título */
 .page-title {
@@ -220,17 +229,24 @@
 <script>
     async function fetchCryptoPrices() {
         try {
-            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=official-trump,bitcoin,ethereum,binancecoin,solana,cardano,xrp,dogecoin,tron,polkadot,shiba-inu&vs_currencies=usd&include_24hr_change=true');
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,cardano,xrp,dogecoin,tron,polkadot,shiba-inu,official-trump&vs_currencies=usd&include_24hr_change=true');
             if (!response.ok) throw new Error('Failed to fetch prices.');
             const data = await response.json();
 
-            let prices = Object.entries(data).map(([key, value]) => 
-                `${key.toUpperCase()}: $${value.usd.toFixed(2)} (${value.usd_24h_change.toFixed(2)}%)`
-            ).join(' | ');
+            let prices = Object.entries(data).map(([key, value]) => {
+                const price = value.usd.toFixed(2);
+                const change = value.usd_24h_change.toFixed(2);
+                
+                // Define a cor com base no valor da mudança percentual
+                const colorClass = change >= 0 ? 'positive' : 'negative';
 
-            document.getElementById('crypto-prices').innerText = prices;
+                return `${key.toUpperCase()}: $${price} (<span class="${colorClass}">${change}%</span>)`;
+            }).join(' | ');
+
+            document.getElementById('crypto-prices').innerHTML = prices;
         } catch (error) {
             document.getElementById('crypto-prices').textContent = 'Failed to load crypto prices. Please try again later.';
+            console.error('Error fetching crypto prices:', error);
         }
     }
 
