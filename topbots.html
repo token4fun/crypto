@@ -140,10 +140,12 @@
 </head>
 <body>
 
-    <!-- Ticker de Criptomoedas -->
-    <div class="crypto-ticker" id="crypto-prices">
+<!-- Ticker de Criptomoedas -->
+<div class="crypto-ticker">
+    <marquee behavior="scroll" direction="left" scrollamount="5" id="crypto-prices">
         Loading cryptocurrency prices...
-    </div>
+    </marquee>
+</div>
 
     <h1 class="page-title">TOP SNIPER & TRADING BOTS ON TELEGRAM</h1>
     <p class="page-description">Click the link to access the bot on Telegram. The bot will guide you on how to proceed with sniping and trading.</p>
@@ -209,33 +211,27 @@
     </div>
 
     <!-- Scripts -->
-    <script>
-        async function fetchCryptoPrices() {
-            try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=official-trump,bitcoin,ethereum,binancecoin,solana,cardano,xrp,dogecoin,tron,polkadot,shiba-inu&vs_currencies=usd&include_24hr_change=true');
-                if (!response.ok) throw new Error('Failed to fetch prices.');
-                const data = await response.json();
+<script>
+    async function fetchCryptoPrices() {
+        try {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=official-trump,bitcoin,ethereum,binancecoin,solana,cardano,xrp,dogecoin,tron,polkadot,shiba-inu&vs_currencies=usd&include_24hr_change=true');
+            if (!response.ok) throw new Error('Failed to fetch prices.');
+            const data = await response.json();
 
-                let prices = Object.entries(data).map(([key, value]) => 
-                    `${key.toUpperCase()}: $${value.usd.toFixed(2)} (${value.usd_24h_change.toFixed(2)}%)`
-                ).join(' | ');
+            let prices = Object.entries(data).map(([key, value]) => 
+                `${key.toUpperCase()}: $${value.usd.toFixed(2)} (${value.usd_24h_change.toFixed(2)}%)`
+            ).join(' | ');
 
-                document.getElementById('crypto-prices').innerText = prices;
-            } catch (error) {
-                document.getElementById('crypto-prices').textContent = 'Failed to load crypto prices. Please try again later.';
-            }
+            document.getElementById('crypto-prices').innerText = prices;
+        } catch (error) {
+            document.getElementById('crypto-prices').textContent = 'Failed to load crypto prices. Please try again later.';
         }
+    }
 
-        fetchCryptoPrices();
-        setInterval(fetchCryptoPrices, 60000);
+    fetchCryptoPrices();
+    setInterval(fetchCryptoPrices, 60000);
+</script>
 
-        document.addEventListener("DOMContentLoaded", function() {
-            let visits = localStorage.getItem('visitCount') || 0;
-            visits++;
-            localStorage.setItem('visitCount', visits);
-            document.getElementById('visit-count').textContent = visits;
-        });
-    </script>
 
 </body>
 </html>
