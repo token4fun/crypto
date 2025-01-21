@@ -50,6 +50,67 @@
             padding: 20px;
         }
 
+        .bot-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            transition: all 0.4s ease;
+            border: 2px solid #ff8e53;
+        }
+
+        .bot-section:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+        }
+
+        .bot-section img {
+            max-width: 180px;
+            border-radius: 15px;
+            border: 3px solid #ff8e53;
+            box-shadow: 0 0 20px rgba(255, 142, 83, 0.8);
+        }
+
+        .bot-info {
+            flex: 1;
+            padding-left: 30px;
+        }
+
+        .bot-info h2 {
+            margin: 0 0 15px;
+            font-size: 28px;
+            background: linear-gradient(90deg, #ff8e53, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bot-info p {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .bot-link {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #ff8e53, #ff6b6b);
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 142, 83, 0.6);
+        }
+
+        .bot-link:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.9);
+        }
+
         /* Footer section with visit counter */
         .footer {
             text-align: center;
@@ -62,15 +123,82 @@
 </head>
 <body>
 
-    <h1>Top Telegram Bots</h1>
-
     <!-- Google Translate Button -->
     <div class="translate-btn">
         <div id="google_translate_element"></div>
     </div>
 
+    <!-- Bot Sections -->
+    <div class="container">
+        <div class="bot-section">
+            <img src="bot1.jpg" alt="Bot 1">
+            <div class="bot-info">
+                <h2>Sniper Bot Pro</h2>
+                <p>Advanced trading automation for crypto sniping.</p>
+                <a href="https://t.me/sniperbot" class="bot-link" onclick="sendNotification('Sniper Bot Pro')">Try Now</a>
+            </div>
+        </div>
+
+        <div class="bot-section">
+            <img src="bot2.jpg" alt="Bot 2">
+            <div class="bot-info">
+                <h2>TradeMaster AI</h2>
+                <p>Smart trading with AI-powered analytics.</p>
+                <a href="https://t.me/trademasterai" class="bot-link" onclick="sendNotification('TradeMaster AI')">Explore</a>
+            </div>
+        </div>
+
+        <div class="bot-section">
+            <img src="bot3.jpg" alt="Bot 3">
+            <div class="bot-info">
+                <h2>Crypto Alert Bot</h2>
+                <p>Stay ahead with real-time market alerts.</p>
+                <a href="https://t.me/cryptoalert" class="bot-link" onclick="sendNotification('Crypto Alert Bot')">Join Now</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Telegram Contact Button -->
     <a href="https://t.me/Marcelo_VP" class="telegram-btn">@Marcelo_VP</a>
+
+    <!-- Footer with visit counter -->
+    <div class="footer">
+        Page visits: <span id="visit-count">0</span>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+
+        // Send click notification to Telegram
+        function sendNotification(botName) {
+            fetch('https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: 'YOUR_CHAT_ID',
+                    text: `Someone clicked on: ${botName}`
+                })
+            }).catch(err => console.error('Error sending notification:', err));
+        }
+
+        // Visit Counter Logic
+        document.addEventListener("DOMContentLoaded", function() {
+            let visits = localStorage.getItem('visitCount');
+            if (!visits) {
+                visits = 1;
+            } else {
+                visits = parseInt(visits) + 1;
+            }
+            localStorage.setItem('visitCount', visits);
+            document.getElementById('visit-count').textContent = visits;
+        });
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
