@@ -71,11 +71,12 @@
     }
 
     /* Botões com efeito de neon */
-    .btn {
+    .btn, .bot-link {
+        padding: 10px 20px;  /* Reduz o tamanho do padding */
+        font-size: 16px;      /* Diminui o tamanho da fonte */
+        width: 100%;          /* Faz com que os botões ocupem a largura total */
+        box-sizing: border-box; /* Garante que o padding seja incluído no cálculo da largura */
         display: inline-block;
-        padding: 15px 30px;
-        margin: 20px 10px;
-        font-size: 18px;
         font-weight: bold;
         color: #fff;
         text-decoration: none;
@@ -86,7 +87,7 @@
         transition: all 0.3s ease;
     }
 
-    .btn:hover {
+    .btn:hover, .bot-link:hover {
         background: #ff8c00;
         box-shadow: 0 0 40px #ff4500;
     }
@@ -137,22 +138,6 @@
         opacity: 0.8;
     }
 
-    .bot-link {
-        display: inline-block;
-        padding: 15px 30px;
-        background: linear-gradient(90deg, #ff8e53, #ff6b6b);
-        color: white;
-        font-weight: bold;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-    }
-
-    .bot-link:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 20px rgba(255, 142, 83, 0.8);
-    }
-
     /* Botão de Contato no Telegram */
     .telegram-btn {
         position: fixed;
@@ -160,9 +145,9 @@
         right: 20px;
         background: linear-gradient(90deg, #ff6b6b, #ff8e53);
         color: white;
-        padding: 15px 20px;
+        padding: 12px 18px;  /* Ajuste do tamanho do botão de contato */
+        font-size: 16px;      /* Tamanho da fonte do botão de contato */
         border-radius: 50px;
-        font-size: 18px;
         font-weight: bold;
         text-decoration: none;
         box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
@@ -274,9 +259,10 @@
             font-size: 16px;
         }
 
-        .bot-link {
-            width: 100%;
-            margin-top: 10px;
+        .btn, .bot-link {
+            padding: 10px 20px;  /* Reduz o tamanho do padding */
+            font-size: 16px;      /* Diminui o tamanho da fonte */
+            width: 100%;          /* Faz com que os botões ocupem a largura total */
         }
 
         .telegram-btn {
@@ -286,6 +272,7 @@
         }
     }
 </style>
+
 
 
 </head>
