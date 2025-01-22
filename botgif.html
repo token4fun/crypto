@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BotGIF</title>
+    <style>
+        /* Estilo moderno com fundo escuro */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1b1b1b 50%, #2b2b2b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Efeito de flutuação para a logo */
+        .floating-logo {
+            width: 300px;
+            height: auto;
+            animation: float 3s ease-in-out infinite, neon-glow-blue 1.5s infinite alternate;
+            filter: drop-shadow(0 0 2px #00f0ff) drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff);
+        }
+
+        /* Animação de flutuação */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Animação de brilho neon azul */
+        @keyframes neon-glow-blue {
+            from {
+                filter: drop-shadow(0 0 2px #00f0ff) drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff);
+            }
+            to {
+                filter: drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 20px #0077ff);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo com efeito de flutuação -->
+    <img src="topbot.png" alt="TopBot Logo" class="floating-logo">
+</body>
+</html>
