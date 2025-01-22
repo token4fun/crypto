@@ -2,35 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Top Sniper & Trading Bots on Telegram</title>
-    <style>
-        /* Estilo moderno com fundo escuro e texto em laranja neon */
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #0f0f0f 0%, #1b1b1b 50%, #2b2b2b 100%);
-    color: #fff;
-    text-align: center;
-    overflow-x: hidden;  /* Mantém a página responsiva sem rolagem horizontal */
-    overflow-y: auto;    /* Permite a rolagem vertical */
-}
+<style>
+    /* Estilo moderno com fundo escuro e texto em laranja neon */
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #0f0f0f 0%, #1b1b1b 50%, #2b2b2b 100%);
+        color: #fff;
+        text-align: center;
+        overflow-x: hidden;  /* Mantém a página responsiva sem rolagem horizontal */
+        overflow-y: auto;    /* Permite a rolagem vertical */
+    }
 
-/* Ticker de Criptomoedas */
-.crypto-ticker {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    overflow: hidden;
-    background: linear-gradient(90deg, #1e1e1e, #2a2a2a); /* Gradiente escuro */
-    padding: 15px 0;
-    font-size: 20px;
-    color: #00ffcc; /* Cor mais vibrante e visível */
-    font-weight: bold;
-    text-align: center;
-    z-index: 1000;
-    border-bottom: 2px solid #ff8e53; /* Linha de destaque */
-}
+    /* Ticker de Criptomoedas */
+    .crypto-ticker {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        overflow: hidden;
+        background: linear-gradient(90deg, #1e1e1e, #2a2a2a); /* Gradiente escuro */
+        padding: 15px 0;
+        font-size: 20px;
+        color: #00ffcc; /* Cor mais vibrante e visível */
+        font-weight: bold;
+        text-align: center;
+        z-index: 1000;
+        border-bottom: 2px solid #ff8e53; /* Linha de destaque */
+    }
 
     /* Estiliza valores positivos em azul */
     .positive {
@@ -42,206 +42,251 @@ body {
         color: #ff4c4c;  /* Vermelho vibrante */
     }
 
-        /* Efeito neon para o título */
-        .page-title {
-            font-size: 48px;
-            font-weight: bold;
-            margin-top: 100px;
-            color: #ff8c00;
-            text-shadow: 0 0 20px #ff8c00, 0 0 40px #ff4500, 0 0 60px #ff8c00;
-            animation: neon-glow 1.5s infinite alternate;
+    /* Efeito neon para o título */
+    .page-title {
+        font-size: 48px;
+        font-weight: bold;
+        margin-top: 100px;
+        color: #ff8c00;
+        text-shadow: 0 0 20px #ff8c00, 0 0 40px #ff4500, 0 0 60px #ff8c00;
+        animation: neon-glow 1.5s infinite alternate;
+    }
+
+    /* Efeito neon para o subtítulo */
+    .page-description {
+        font-size: 22px;
+        color: #39ff14; /* Cor igual ao título */
+        max-width: 800px;
+        margin: 0 auto;
+        text-shadow: 0 0 20px #39ff14, 0 0 40px #ff4500, 0 0 60px #39ff14;
+        animation: neon-glow 1.5s infinite alternate; /* Usando a mesma animação do título */
+    }
+
+    /* Efeito de flutuação para a logo */
+    .floating-logo {
+        width: 200px;
+        height: auto;
+        animation: float 3s ease-in-out infinite, neon-glow-green 1.5s infinite alternate;
+        filter: drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00) drop-shadow(0 0 30px #39ff14);
+    }
+
+    /* Botões com efeito de neon */
+    .btn {
+        display: inline-block;
+        padding: 15px 30px;
+        margin: 20px 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        border: 2px solid #ff8c00;
+        border-radius: 8px;
+        text-shadow: 0 0 10px #ff8c00;
+        box-shadow: 0 0 20px #ff8c00;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #ff8c00;
+        box-shadow: 0 0 40px #ff4500;
+    }
+
+    /* Seções dos bots */
+    .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 10px;
+    }
+
+    .bot-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 1px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        border: 2px solid #ff8e53;
+        transition: all 0.4s ease;
+    }
+
+    .bot-section:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+    }
+
+    .bot-section img {
+        max-width: 150px;
+        border-radius: 15px;
+        border: 3px solid #ff8e53;
+    }
+
+    .bot-info {
+        flex: 1;
+        padding-left: 30px;
+    }
+
+    .bot-info h2 {
+        font-size: 28px;
+        color: #ff8e53;
+    }
+
+    .bot-info p {
+        font-size: 18px;
+        opacity: 0.8;
+    }
+
+    .bot-link {
+        display: inline-block;
+        padding: 15px 30px;
+        background: linear-gradient(90deg, #ff8e53, #ff6b6b);
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .bot-link:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 142, 83, 0.8);
+    }
+
+    /* Botão de Contato no Telegram */
+    .telegram-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+        transition: all 0.3s ease;
+    }
+
+    .telegram-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(255, 107, 107, 0.9);
+    }
+
+    /* Rodapé com contador de visitas */
+    .footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 18px;
+        background: rgba(0, 0, 0, 0.7);
+        border-top: 2px solid #ff8e53;
+    }
+
+    /* Animação de brilho neon para texto laranja */
+    @keyframes neon-glow {
+        from {
+            text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff4500, 0 0 30px #ff8c00;
         }
-
-
-        /* Efeito neon para o subtítulo */
-        .page-description {
-    font-size: 22px;
-    color: #39ff14; /* Cor igual ao título */
-    max-width: 800px;
-    margin: 0 auto;
-    text-shadow: 0 0 20px #39ff14, 0 0 40px #ff4500, 0 0 60px #39ff14;
-    animation: neon-glow 1.5s infinite alternate; /* Usando a mesma animação do título */
-}
-
-
-        /* Efeito de flutuação para a logo */
-.floating-logo {
-    width: 200px;
-    height: auto;
-    animation: float 3s ease-in-out infinite, neon-glow-green 1.5s infinite alternate;
-    filter: drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00) drop-shadow(0 0 30px #39ff14);
-}
-
-                /* Botões com efeito de neon */
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            margin: 20px 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            text-decoration: none;
-            border: 2px solid #ff8c00;
-            border-radius: 8px;
-            text-shadow: 0 0 10px #ff8c00;
-            box-shadow: 0 0 20px #ff8c00;
-            transition: all 0.3s ease;
+        to {
+            text-shadow: 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 60px #ff4500;
         }
+    }
 
-        .btn:hover {
-            background: #ff8c00;
-            box-shadow: 0 0 40px #ff4500;
+    /* Animação de brilho neon para texto verde */
+    @keyframes neon-glow-green {
+        from {
+            text-shadow: 0 0 10px #39ff14, 0 0 20px #00ff00, 0 0 30px #39ff14;
         }
+        to {
+            text-shadow: 0 0 20px #00ff00, 0 0 40px #39ff14, 0 0 60px #00ff00;
+        }
+    }
 
-        /* Seções dos bots */
+    /* Animação de flutuação */
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    /* Animação de brilho neon verde para elementos (logo por exemplo) */
+    @keyframes neon-glow-green {
+        from {
+            filter: drop-shadow(0 0 2px #39ff14) drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14);
+        }
+        to {
+            filter: drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00);
+        }
+    }
+
+    /* Animação de brilho neon azul para elementos (logo por exemplo) */
+    @keyframes neon-glow-blue {
+        from {
+            filter: drop-shadow(0 0 2px #00f0ff) drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff);
+        }
+        to {
+            filter: drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 20px #0077ff);
+        }
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 768px) {
         .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 10px;
+            padding: 5px;
         }
 
         .bot-section {
-            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 1px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-            border: 2px solid #ff8e53;
-            transition: all 0.4s ease;
-        }
-
-        .bot-section:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+            padding: 10px;
         }
 
         .bot-section img {
-            max-width: 150px;
-            border-radius: 15px;
-            border: 3px solid #ff8e53;
+            max-width: 100%;
+            height: auto;
         }
 
         .bot-info {
-            flex: 1;
-            padding-left: 30px;
+            padding-left: 0;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 30px;
+        }
+
+        .page-description {
+            font-size: 18px;
         }
 
         .bot-info h2 {
-            font-size: 28px;
-            color: #ff8e53;
+            font-size: 24px;
         }
 
         .bot-info p {
-            font-size: 18px;
-            opacity: 0.8;
+            font-size: 16px;
         }
 
         .bot-link {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(90deg, #ff8e53, #ff6b6b);
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .bot-link:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 142, 83, 0.8);
-        }
-
-        /* Botão de Contato no Telegram */
         .telegram-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
-            transition: all 0.3s ease;
+            bottom: 10px;
+            right: 10px;
+            padding: 12px 18px;
         }
+    }
+</style>
 
-        .telegram-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(255, 107, 107, 0.9);
-        }
-
-        /* Rodapé com contador de visitas */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 18px;
-            background: rgba(0, 0, 0, 0.7);
-            border-top: 2px solid #ff8e53;
-        }
-
-
-        
-/* Animação de brilho neon para texto laranja */
-@keyframes neon-glow {
-    from {
-        text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff4500, 0 0 30px #ff8c00;
-    }
-    to {
-        text-shadow: 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 60px #ff4500;
-    }
-}
-
-/* Animação de brilho neon para texto verde */
-@keyframes neon-glow-green {
-    from {
-        text-shadow: 0 0 10px #39ff14, 0 0 20px #00ff00, 0 0 30px #39ff14;
-    }
-    to {
-        text-shadow: 0 0 20px #00ff00, 0 0 40px #39ff14, 0 0 60px #00ff00;
-    }
-}
-
-/* Animação de flutuação */
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
-
-/* Animação de brilho neon verde para elementos (logo por exemplo) */
-@keyframes neon-glow-green {
-    from {
-        filter: drop-shadow(0 0 2px #39ff14) drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14);
-    }
-    to {
-        filter: drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00);
-    }
-}
-
-/* Animação de brilho neon azul para elementos (logo por exemplo) */
-@keyframes neon-glow-blue {
-    from {
-        filter: drop-shadow(0 0 2px #00f0ff) drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff);
-    }
-    to {
-        filter: drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 20px #0077ff);
-    }
-}
-
-
-    </style>
 </head>
 <body>
 
