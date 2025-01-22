@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Top Sniper & Trading Bots on Telegram</title>
-
 <style>
     /* Estilo moderno com fundo escuro e texto em laranja neon */
     body {
@@ -71,19 +70,12 @@
         filter: drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00) drop-shadow(0 0 30px #39ff14);
     }
 
-    /* Esconder elementos no mini app do Telegram */
-    @media (max-width: 768px) {
-        .crypto-ticker, .floating-logo {
-            display: none !important;
-        }
-    }
-
     /* Botões com efeito de neon */
     .btn, .bot-link {
-        padding: 10px 20px;
-        font-size: 16px;
-        width: 100%;
-        box-sizing: border-box;
+        padding: 10px 20px;  /* Reduz o tamanho do padding */
+        font-size: 16px;      /* Diminui o tamanho da fonte */
+        width: 100%;          /* Faz com que os botões ocupem a largura total */
+        box-sizing: border-box; /* Garante que o padding seja incluído no cálculo da largura */
         display: inline-block;
         font-weight: bold;
         color: #fff;
@@ -100,6 +92,83 @@
         box-shadow: 0 0 40px #ff4500;
     }
 
+    /* Seções dos bots */
+    .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 10px;
+    }
+
+    .bot-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 1px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        border: 2px solid #ff8e53;
+        transition: all 0.4s ease;
+    }
+
+    .bot-section:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+    }
+
+    .bot-section img {
+        max-width: 150px;
+        border-radius: 15px;
+        border: 3px solid #ff8e53;
+    }
+
+    .bot-info {
+        flex: 1;
+        padding-left: 30px;
+    }
+
+    .bot-info h2 {
+        font-size: 28px;
+        color: #ff8e53;
+    }
+
+    .bot-info p {
+        font-size: 18px;
+        opacity: 0.8;
+    }
+
+    /* Botão de Contato no Telegram */
+    .telegram-btn {
+        position: fixed;
+        bottom: 10px; /* Ajusta a posição inferior */
+        right: 10px;  /* Ajusta a posição à direita */
+        background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+        color: white;
+        padding: 5px 10px;  /* Reduz o padding */
+        font-size: 14px;      /* Diminui o tamanho da fonte */
+        border-radius: 50px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 0 10px rgba(255, 107, 107, 0.6);
+        transition: all 0.3s ease;
+    }
+
+    .telegram-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(255, 107, 107, 0.9);
+    }
+
+    /* Rodapé com contador de visitas */
+    .footer {
+        text-align: center;
+        color: ff8c00;
+        padding: 20px;
+        font-size: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        border-top: 2px solid #ff8e53;
+    }
+
     /* Animação de brilho neon para texto laranja */
     @keyframes neon-glow {
         from {
@@ -107,6 +176,16 @@
         }
         to {
             text-shadow: 0 0 20px #ff4500, 0 0 40px #ff8c00, 0 0 60px #ff4500;
+        }
+    }
+
+    /* Animação de brilho neon para texto verde */
+    @keyframes neon-glow-green {
+        from {
+            text-shadow: 0 0 10px #39ff14, 0 0 20px #00ff00, 0 0 30px #39ff14;
+        }
+        to {
+            text-shadow: 0 0 20px #00ff00, 0 0 40px #39ff14, 0 0 60px #00ff00;
         }
     }
 
@@ -122,9 +201,80 @@
             transform: translateY(0px);
         }
     }
+
+    /* Animação de brilho neon verde para elementos (logo por exemplo) */
+    @keyframes neon-glow-green {
+        from {
+            filter: drop-shadow(0 0 2px #39ff14) drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14);
+        }
+        to {
+            filter: drop-shadow(0 0 5px #00ff00) drop-shadow(0 0 10px #39ff14) drop-shadow(0 0 20px #00ff00);
+        }
+    }
+
+    /* Animação de brilho neon azul para elementos (logo por exemplo) */
+    @keyframes neon-glow-blue {
+        from {
+            filter: drop-shadow(0 0 2px #00f0ff) drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff);
+        }
+        to {
+            filter: drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 20px #0077ff);
+        }
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 768px) {
+        .container {
+            padding: 5px;
+        }
+
+        .bot-section {
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .bot-section img {
+            max-width: 80%; /* Ajusta o tamanho das imagens para 80% da largura da tela */
+            height: auto;    /* Mantém a proporção da imagem */
+        }
+
+        .bot-info {
+            padding-left: 0;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 30px;
+        }
+
+        .page-description {
+            font-size: 18px;
+        }
+
+        .bot-info h2 {
+            font-size: 24px;
+        }
+
+        .bot-info p {
+            font-size: 16px;
+        }
+
+        .btn, .bot-link {
+            padding: 10px 20px;  /* Reduz o tamanho do padding */
+            font-size: 16px;      /* Diminui o tamanho da fonte */
+            width: 100%;          /* Faz com que os botões ocupem a largura total */
+        }
+
+        .telegram-btn {
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 15px;  /* Reduz o padding do botão de Telegram */
+            font-size: 14px;      /* Diminui o tamanho da fonte */
+        }
+    }
 </style>
 
-    
 </head>
 <body>
 
