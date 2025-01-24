@@ -2,171 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SHERK Price Chart</title>
+  <title>SHERK Real-Time Chart</title>
 
-  <!-- Include Chart.js -->
+  <!-- 1) Chart.js from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
 
-  <!-- Include the Financial Chart plugin for candlestick and ohlc chart types -->
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@3.0.0/dist/chartjs-chart-financial.min.js"></script>
+  <!-- 2) graphql-ws (ESM build) from jsDelivr -->
+  <!-- This provides createClient() for subscriptions -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/graphql-ws@5.12.0/esm/index.js';
+
+    // -------------------------
+    // A) Your subscription query
+    // -------------------------
+    const SUBSCRIPTION_QUERY = `
+      subscription ($token: String, $time_ago: DateTime) {
+        Solana {
+          DEXTradeByTokens(
+            orderBy: { ascendingByField: "Block_Time" }
+            where: {
+              Trade: {
+                Currency: { MintAddress: { is: $token } }, 
+                Side: {
+                  Currency: {
+                    MintAddress: {
+                      in: [
+                        "11111111111111111111111111111111", 
+                        "So11111111111111111111111111111111111111112", 
+                        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 
+                        "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", 
+                        "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN", 
+                        "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm"
+                      ]
+                    }
+                  }
+                }
+              }, 
+              Block: { Time: { after: $time_ago } }
+            }
+          ) {
+            Block {
+              Time
+            }
+            Trade {
+              close: PriceInUSD(maximum: Transaction_Index)
+            }
+            min: quantile(of: Trade_PriceInUSD, level: 0.05)
+            max: quantile(of: Trade_PriceInUSD, level: 0.95)
+            volume: sum(of: Trade_Side_AmountInUSD)
+          }
+        }
+      }
+    `;
+
+    // -----------------------------
+    // B) Variables for the query
+    // -----------------------------
+    const VARIABLES = {
+      token: "6wY93bkRSk5KagCGTHrjLPCpbMWEPQGU9wrpsZ8tyftL",
+      time_ago: "2025-01-24T11:02:40Z"
+    };
+
+    // -----------------------------------------
+    // C) Create a client for the Bitquery WS
+    //    (Adjust URL / authentication as needed)
+    // -----------------------------------------
+    const client = createClient({
+      url: 'wss://streaming.bitquery.io/eap',
+      // If Bitquery requires authentication (headers), do something like:
+      // connectionParams: {
+      //   token: 'YOUR_BITQUERY_API_KEY',
+      // },
+    });
+
+    // -------------------
+    // D) Initialize Chart
+    // -------------------
+    let myChart;
+    window.addEventListener('DOMContentLoaded', () => {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      myChart = new Chart(ctx, {
+        type: 'line', // using a line chart for simplicity
+        data: {
+          labels: [],     // will hold timestamps
+          datasets: [{
+            label: 'SHERK Real-Time Price (USD)',
+            data: [],      // will hold the "close" price
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              title: { display: true, text: 'Time' },
+              type: 'time',       // Chart.js timescale
+              time: {
+                unit: 'minute',   // Adjust to 'second', 'hour', etc. if you want
+                displayFormats: {
+                  minute: 'MMM d, HH:mm'
+                }
+              }
+            },
+            y: {
+              title: { display: true, text: 'Price (USD)' },
+              beginAtZero: false
+            }
+          }
+        }
+      });
+
+      // -----------------------------------------------------------
+      // E) Subscribe to real-time data + update chart on each event
+      // -----------------------------------------------------------
+      client.subscribe(
+        { query: SUBSCRIPTION_QUERY, variables: VARIABLES },
+        {
+          next: (payload) => {
+            // payload contains data from the subscription
+            // e.g. data.data.Solana.DEXTradeByTokens
+            const items = payload?.data?.Solana?.DEXTradeByTokens;
+            if (!Array.isArray(items) || items.length === 0) return;
+
+            // For demonstration, let's assume each "item" is a single data point
+            // (In reality, you might get multiple items or partial updates.)
+            items.forEach((item) => {
+              const closePrice = item?.Trade?.close;
+              const time = item?.Block?.Time;
+              if (time && closePrice) {
+                // Push new data into the chart
+                myChart.data.labels.push(time);
+                myChart.data.datasets[0].data.push(closePrice);
+              }
+            });
+
+            // Re-render the chart
+            myChart.update();
+          },
+          error: (err) => {
+            console.error('Subscription error:', err);
+          },
+          complete: () => {
+            console.log('Subscription completed');
+          },
+        }
+      );
+    });
+  </script>
 
   <style>
     body {
       margin: 0; 
-      padding: 0; 
-      font-family: sans-serif;
-      background: #f5f5f5;
+      padding: 0;
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
     }
-    #myChart {
+    .chart-container {
+      width: 800px;
+      max-width: 95%;
+      margin: 40px auto;
       background: #fff;
       border: 1px solid #ccc;
-      display: block;
-      margin: 40px auto;
-      max-width: 900px;
-      max-height: 600px;
+      padding: 10px;
     }
   </style>
+
 </head>
 <body>
-
-<canvas id="myChart" width="900" height="600"></canvas>
-
-<script>
-// -----------------------------------------------------------
-// 1) Define the same GraphQL query and variables you showed
-// -----------------------------------------------------------
-const query = `query ($token: String, $dataset: dataset_arg_enum, $time_ago: DateTime, $interval: Int) {
-  Solana(dataset: $dataset) {
-    DEXTradeByTokens(
-      orderBy: {ascendingByField: "Block_Time"}
-      where: {
-        Trade: {
-          Currency: {MintAddress: {is: $token}}, 
-          Side: {
-            Currency: {
-              MintAddress: {
-                in: [
-                  "11111111111111111111111111111111", 
-                  "So11111111111111111111111111111111111111112", 
-                  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 
-                  "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", 
-                  "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN", 
-                  "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm"
-                ]
-              }
-            }
-          }
-        }, 
-        Block: {Time: {after: $time_ago}}
-      }
-    ) {
-      Block {
-        Time(interval: {count: $interval, in: minutes})
-      }
-      min: quantile(of: Trade_PriceInUSD, level: 0.05)
-      max: quantile(of: Trade_PriceInUSD, level: 0.95)
-      close: median(of: Trade_PriceInUSD)
-      open: median(of: Trade_PriceInUSD)
-      volume: sum(of: Trade_Side_AmountInUSD)
-    }
-  }
-}`;
-
-const variables = {
-  token: "6wY93bkRSk5KagCGTHrjLPCpbMWEPQGU9wrpsZ8tyftL",
-  time_ago: "2025-01-24T11:02:40Z", // You may need to adjust this date/time
-  interval: 60,                   // in minutes
-  dataset: "combined"
-};
-
-// -----------------------------------------------------------
-// 2) REPLACE this with the actual GraphQL endpoint
-//    that will handle your query. This is just an example URL.
-// -----------------------------------------------------------
-const GRAPHQL_ENDPOINT = "https://YOUR-GRAPHQL-ENDPOINT.com/graphql";
-
-// -----------------------------------------------------------
-// 3) Fetch data from GraphQL, parse it, and render the chart
-// -----------------------------------------------------------
-fetch(GRAPHQL_ENDPOINT, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    query: query,
-    variables: variables
-  }),
-})
-  .then((res) => res.json())
-  .then((resData) => {
-    if (!resData.data || !resData.data.Solana) {
-      throw new Error("No Solana data returned. Check your endpoint/variables.");
-    }
-
-    const trades = resData.data.Solana.DEXTradeByTokens;
-
-    // Convert returned data into an array of candlestick objects:
-    const candleData = trades.map((item) => ({
-      x: new Date(item.Block.Time), // the time from the block
-      o: item.open,                 // open
-      h: item.max,                  // high
-      l: item.min,                  // low
-      c: item.close                 // close
-      // volume is available too if you want to display it
-    }));
-
-    // ---------------------------------------------------------
-    // 4) Initialize Chart.js with the "candlestick" chart type
-    // ---------------------------------------------------------
-    const ctx = document.getElementById("myChart").getContext("2d");
-    new Chart(ctx, {
-      type: "candlestick",
-      data: {
-        datasets: [
-          {
-            label: "$SHERK Price (USD)",
-            data: candleData, 
-            // Optional styling:
-            borderColor: "rgba(38, 198, 218, 1)",
-            color: {
-              up: "rgba(38, 198, 218, 1)",
-              down: "rgba(255, 82, 82, 1)",
-              unchanged: "rgba(255, 192, 0, 1)"
-            }
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: "SHERK/USD Candlestick Chart"
-          }
-        },
-        scales: {
-          x: {
-            type: "timeseries",
-            time: {
-              tooltipFormat: "MMM dd, yyyy HH:mm"
-            },
-            title: {
-              display: true,
-              text: "Date/Time"
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: "Price (USD)"
-            }
-          }
-        }
-      }
-    });
-  })
-  .catch((error) => {
-    console.error("Error loading SHERK chart data:", error);
-  });
-</script>
+  <div class="chart-container">
+    <canvas id="myChart" width="800" height="400"></canvas>
+  </div>
 </body>
 </html>
