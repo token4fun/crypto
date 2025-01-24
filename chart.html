@@ -2,43 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>|- SHERK Real-Time Chart</title>
+  <title>DexRabbit-Style Real-Time Chart for $SFT</title>
 
   <!-- 1) Chart.js from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
 
-  <!-- 2) graphql-ws (ESM build) from jsDelivr -->
-  <!-- This provides createClient() for subscriptions -->
+  <!-- 2) chartjs-chart-financial plugin for candlestick/ohlc -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@3.0.0/dist/chartjs-chart-financial.min.js"></script>
+
+  <!-- 3) graphql-ws for real-time subscriptions -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/graphql-ws@5.12.0/esm/index.js';
 
-    // -------------------------
-    // A) Your subscription query
-    // -------------------------
-    const SUBSCRIPTION_QUERY = `
-      subscription ($token: String, $time_ago: DateTime) {
-        Solana {
+    // ---------------------------------------------
+    // A) GraphQL QUERIES EXACTLY LIKE DexRabbit USES
+    // ---------------------------------------------
+    // 1. Historical data (candlestick)
+    const HISTORY_QUERY = `
+      query ($token: String, $dataset: dataset_arg_enum, $time_ago: DateTime, $interval: Int) {
+        Solana(dataset: $dataset) {
           DEXTradeByTokens(
-            orderBy: { ascendingByField: "Block_Time" }
+            orderBy: {ascendingByField: "Block_Time"}
             where: {
               Trade: {
-                Currency: { MintAddress: { is: $token } }, 
+                Currency: {MintAddress: {is: $token}},
                 Side: {
                   Currency: {
                     MintAddress: {
                       in: [
-                        "11111111111111111111111111111111", 
-                        "So11111111111111111111111111111111111111112", 
-                        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 
-                        "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", 
-                        "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN", 
+                        "11111111111111111111111111111111",
+                        "So11111111111111111111111111111111111111112",
+                        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                        "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+                        "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
                         "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm"
                       ]
                     }
                   }
                 }
-              }, 
-              Block: { Time: { after: $time_ago } }
+              },
+              Block: {Time: {after: $time_ago}}
+            }
+          ) {
+            Block {
+              Time(interval: {count: $interval, in: minutes})
+            }
+            min: quantile(of: Trade_PriceInUSD, level: 0.05)
+            max: quantile(of: Trade_PriceInUSD, level: 0.95)
+            close: median(of: Trade_PriceInUSD)
+            open: median(of: Trade_PriceInUSD)
+            volume: sum(of: Trade_Side_AmountInUSD)
+          }
+        }
+      }
+    `;
+
+    // 2. Real-time subscription
+    const SUBSCRIPTION_QUERY = `
+      subscription ($token: String, $time_ago: DateTime) {
+        Solana {
+          DEXTradeByTokens(
+            orderBy: {ascendingByField: "Block_Time"}
+            where: {
+              Trade: {
+                Currency: {MintAddress: {is: $token}},
+                Side: {
+                  Currency: {
+                    MintAddress: {
+                      in: [
+                        "11111111111111111111111111111111",
+                        "So11111111111111111111111111111111111111112",
+                        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4W"
+                        ...
+                      ]
+                    }
+                  }
+                }
+              },
+              Block: {Time: {after: $time_ago}}
             }
           ) {
             Block {
@@ -55,91 +96,194 @@
       }
     `;
 
-    // -----------------------------
-    // B) Variables for the query
-    // -----------------------------
-    const VARIABLES = {
+    // --------------------------------
+    // B) Variables: same as DexRabbit
+    // --------------------------------
+    // If needed, adjust time_ago, interval, or dataset
+    const variables = {
       token: "6wY93bkRSk5KagCGTHrjLPCpbMWEPQGU9wrpsZ8tyftL",
-      time_ago: "2025-01-24T11:02:40Z"
+      dataset: "combined",           // or "some_other_dataset"
+      time_ago: "2025-01-24T11:21:48Z", // start time
+      interval: 60,                  // minutes
     };
 
-    // -----------------------------------------
-    // C) Create a client for the Bitquery WS
-    //    (Adjust URL / authentication as needed)
-    // -----------------------------------------
-    const client = createClient({
-      url: 'wss://streaming.bitquery.io/eap',
-      // If Bitquery requires authentication (headers), do something like:
-      // connectionParams: {
-      //   token: 'YOUR_BITQUERY_API_KEY',
-      // },
-    });
+    // -----------------------------------------------------------
+    // C) Set up endpoints for historical fetch + WebSocket
+    // -----------------------------------------------------------
+    // 1. Historical data is typically fetched via HTTPS:
+    const BITQUERY_HTTP = "https://graphql.bitquery.io";
+    // 2. Real-time subscription is via WS:
+    const BITQUERY_WS = "wss://streaming.bitquery.io/eap";
 
-    // -------------------
-    // D) Initialize Chart
-    // -------------------
-    let myChart;
-    window.addEventListener('DOMContentLoaded', () => {
+    // If Bitquery requires an API key:
+    const BITQUERY_API_KEY = "YOUR_BITQUERY_API_KEY"; // or remove if not needed
+
+    // ---------------------------------
+    // D) Build a candlestick chart
+    // ---------------------------------
+    let chart;
+    let candleData = []; // We'll store candlesticks [ {x, o, h, l, c}, ...]
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      // 1) Create the Chart.js candlestick chart
       const ctx = document.getElementById('myChart').getContext('2d');
-      myChart = new Chart(ctx, {
-        type: 'line', // using a line chart for simplicity
+      chart = new Chart(ctx, {
+        type: 'candlestick',
         data: {
-          labels: [],     // will hold timestamps
-          datasets: [{
-            label: 'SHERK Real-Time Price (USD)',
-            data: [],      // will hold the "close" price
-            borderColor: 'rgba(54, 162, 235, 1)',
-            backgroundColor: 'rgba(54, 162, 235, 0.1)',
-            fill: true
-          }]
+          datasets: [
+            {
+              label: '$SFT (Sherk Fun Token)',
+              data: candleData,
+              // Optional styling
+              borderColor: 'rgba(0, 150, 136, 1)',
+              color: {
+                up: 'rgba(38,198,218,1)',
+                down: 'rgba(255,82,82,1)',
+                unchanged: 'rgba(255,193,7,1)',
+              },
+            },
+          ],
         },
         options: {
           responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'SHERK Fun Token (SFT) — Real-Time Chart',
+            },
+          },
           scales: {
             x: {
-              title: { display: true, text: 'Time' },
-              type: 'time',       // Chart.js timescale
+              type: 'timeseries',
               time: {
-                unit: 'minute',   // Adjust to 'second', 'hour', etc. if you want
-                displayFormats: {
-                  minute: 'MMM d, HH:mm'
-                }
-              }
+                tooltipFormat: 'MMM dd, yyyy HH:mm',
+              },
+              title: {
+                display: true,
+                text: 'Time',
+              },
             },
             y: {
-              title: { display: true, text: 'Price (USD)' },
-              beginAtZero: false
-            }
-          }
-        }
+              title: {
+                display: true,
+                text: 'Price (USD)',
+              },
+              // beginAtZero: false // typically false for price charts
+            },
+          },
+        },
       });
 
-      // -----------------------------------------------------------
-      // E) Subscribe to real-time data + update chart on each event
-      // -----------------------------------------------------------
+      // 2) Fetch the initial historical data (candles)
+      await fetchHistoricalData();
+
+      // 3) Connect WebSocket subscription for real-time updates
+      subscribeRealTime();
+    });
+
+    // ---------------------------------
+    // E) Fetch Historical Data (HTTP)
+    // ---------------------------------
+    async function fetchHistoricalData() {
+      try {
+        const response = await fetch(BITQUERY_HTTP, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // If required by Bitquery:
+            'X-API-KEY': BITQUERY_API_KEY,
+          },
+          body: JSON.stringify({
+            query: HISTORY_QUERY,
+            variables: variables,
+          }),
+        });
+
+        const result = await response.json();
+        const trades = result?.data?.Solana?.DEXTradeByTokens;
+        if (!trades) {
+          console.warn('No historical data returned. Check endpoint/variables.');
+          return;
+        }
+
+        // Convert to candlestick format for Chart.js
+        candleData = trades.map((item) => {
+          return {
+            x: new Date(item.Block.Time),
+            o: item.open,
+            h: item.max,
+            l: item.min,
+            c: item.close,
+            // volume: item.volume, // If you want to track volume separately
+          };
+        });
+
+        // Update the chart data and re-render
+        chart.data.datasets[0].data = candleData;
+        chart.update();
+      } catch (err) {
+        console.error('Error fetching historical data:', err);
+      }
+    }
+
+    // ---------------------------------
+    // F) Subscribe to Real-Time Updates
+    // ---------------------------------
+    function subscribeRealTime() {
+      const client = createClient({
+        url: BITQUERY_WS,
+        connectionParams: {
+          // If needed for Bitquery streaming auth:
+          'X-API-KEY': BITQUERY_API_KEY,
+        },
+      });
+
       client.subscribe(
-        { query: SUBSCRIPTION_QUERY, variables: VARIABLES },
+        {
+          query: SUBSCRIPTION_QUERY,
+          variables: {
+            token: variables.token,
+            time_ago: variables.time_ago,
+          },
+        },
         {
           next: (payload) => {
-            // payload contains data from the subscription
-            // e.g. data.data.Solana.DEXTradeByTokens
+            // The subscription returns new trade info
             const items = payload?.data?.Solana?.DEXTradeByTokens;
-            if (!Array.isArray(items) || items.length === 0) return;
+            if (!items || items.length === 0) return;
 
-            // For demonstration, let's assume each "item" is a single data point
-            // (In reality, you might get multiple items or partial updates.)
+            // DexRabbit logic: each item has a 'Block.Time' and 'Trade.close'
+            // plus 'min', 'max', 'volume' for the last aggregated chunk
+            // Typically we only have 1 item per subscription event
+            // but let's handle the possibility of multiple
             items.forEach((item) => {
-              const closePrice = item?.Trade?.close;
-              const time = item?.Block?.Time;
-              if (time && closePrice) {
-                // Push new data into the chart
-                myChart.data.labels.push(time);
-                myChart.data.datasets[0].data.push(closePrice);
+              const t = new Date(item.Block.Time);
+              const close = item?.Trade?.close;
+
+              // We have partial data for a single "candle" update:
+              // No open/high/low in the subscription, just close + min + max
+              // so let's guess "o" from the last candle or set it to min if new
+              const lastCandle = candleData[candleData.length - 1];
+
+              // If this time matches the last candle's time, update it
+              if (lastCandle && +lastCandle.x === +t) {
+                lastCandle.c = close;
+                if (item.min < lastCandle.l) lastCandle.l = item.min;
+                if (item.max > lastCandle.h) lastCandle.h = item.max;
+              } else {
+                // Otherwise, create a new candle
+                candleData.push({
+                  x: t,
+                  o: close,
+                  h: item.max,
+                  l: item.min,
+                  c: close,
+                });
               }
             });
 
-            // Re-render the chart
-            myChart.update();
+            // Re-render chart
+            chart.update();
           },
           error: (err) => {
             console.error('Subscription error:', err);
@@ -147,32 +291,35 @@
           complete: () => {
             console.log('Subscription completed');
           },
-        }
+        },
       );
-    });
+    }
   </script>
 
   <style>
     body {
-      margin: 0; 
+      margin: 0;
       padding: 0;
-      background: #f0f0f0;
-      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      font-family: sans-serif;
     }
-    .chart-container {
-      width: 800px;
-      max-width: 95%;
+    .container {
+      max-width: 1200px;
       margin: 40px auto;
       background: #fff;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       padding: 10px;
     }
+    #myChart {
+      width: 100%;
+      height: 500px;
+    }
   </style>
-
 </head>
 <body>
-  <div class="chart-container">
-    <canvas id="myChart" width="800" height="400"></canvas>
+  <div class="container">
+    <h1 style="text-align:center;">Sherk Fun Token ($SFT) Real-Time Candlestick Chart</h1>
+    <canvas id="myChart"></canvas>
   </div>
 </body>
 </html>
