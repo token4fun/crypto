@@ -2,46 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>|- DexScreener Solana Chart</title>
+  <title>Moralis Price Chart Widget</title>
   <style>
-    body {
+    /* Basic page reset and styling */
+    html, body {
       margin: 0;
       padding: 0;
-      background: #f5f5f5;
+      height: 100%;
+      background: #071321;
       font-family: sans-serif;
     }
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      background: #ffffff;
-      border: 1px solid #ccc;
-      padding: 1rem;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    iframe {
-      display: block;
+    /* A container to control the overall widget height */
+    #chart-container {
       width: 100%;
-      height: 600px; /* Adjust as needed */
-      border: none;
+      height: 600px; /* Adjust this height as desired */
+      margin: 30px auto;
+      max-width: 1200px; /* Optional max width, remove if you want full width */
+      border: 1px solid #0d2035; /* A subtle border (optional) */
+    }
+    /* Ensure the widget div is 100% of its parent container */
+    #price-chart-widget-container {
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>DexScreener Solana Chart</h1>
-<iframe
-  src="https://dexscreener.com/solana/8846sc9xdlicshbe3feq1c1cojfahzaxaibmbngmqng1?embed=1&theme=dark&info=hide&trades=hide"
-  width="100%"
-  height="600"
-  frameborder="0"
-  allowfullscreen
-  scrolling="no"
->
-</iframe>
 
+  <div id="chart-container">
+    <!-- The snippet you provided -->
+    <div id="price-chart-widget-container">
+      <script type="text/javascript">
+        (function() {
+          function loadWidget() {
+            if (typeof window.createMyWidget === 'function') {
+              window.createMyWidget('price-chart-widget-container', {
+                autoSize: true,
+                chainId: 'solana',
+                tokenAddress: 'Ga5FgL8DxchHMTeLV3gYiwq81MFP9kHMVJwA5Paw7NYj',
+                defaultInterval: '1D',
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? 'Etc/UTC',
+                theme: 'moralis',
+                locale: 'en',
+                backgroundColor: '#071321',
+                gridColor: '#0d2035',
+                textColor: '#68738D',
+                candleUpColor: '#4CE666',
+                candleDownColor: '#E64C4C',
+                hideLeftToolbar: false,
+                hideTopToolbar: false,
+                hideBottomToolbar: false
+              });
+            } else {
+              console.error('createMyWidget function is not defined.');
+            }
+          }
+
+          if (!document.getElementById('moralis-chart-widget')) {
+            var script = document.createElement('script');
+            script.id = 'moralis-chart-widget';
+            script.src = 'https://moralis.com/static/embed/chart.js';
+            script.type = 'text/javascript';
+            script.async = true;
+            script.onload = loadWidget;
+            document.body.appendChild(script);
+          } else {
+            loadWidget();
+          }
+        })();
+      </script>
+    </div>
   </div>
+
 </body>
 </html>
