@@ -33,7 +33,8 @@ var canv = document.getElementById("gameCanvas");
 var ctx = canv.getContext("2d");
 
 // CONFIGURAÇÃO DE IMAGENS E EFEITOS NEON
-var Img = new Image();
+// Corrigindo: definir a variável shipImg corretamente
+var shipImg = new Image();
 shipImg.src = "Ship.png";
 
 // Asteroids images (crypto1.png a crypto8.png)
@@ -63,10 +64,11 @@ var fxExplode = new Sound("explode.m4a");
 var fxHit = new Sound("hit.m4a", 5);
 var fxLaser = new Sound("laser.m4a", 5, 0.5);
 var fxThrust = new Sound("thrust.m4a");
+// Ajuste no construtor Music: se srcHigh não for passado, usar o mesmo arquivo.
 var music = new Music("music.m4a");
-var roidsLeft, roidsTotal;
 
-// PARÂMETROS DO JOGO
+// Variáveis do jogo
+var roidsLeft, roidsTotal;
 var level, lives, roids, score, scoreHigh, ship, text, textAlpha;
 newGame();
 
@@ -255,6 +257,8 @@ function shootLaser() {
 }
 
 function Music(srcLow, srcHigh) {
+  // Se srcHigh não for fornecido, usar srcLow para ambos os sons
+  if (!srcHigh) { srcHigh = srcLow; }
   this.soundLow = new Audio(srcLow);
   this.soundHigh = new Audio(srcHigh);
   this.low = true;
@@ -416,7 +420,7 @@ function update() {
     ctx.fillText(text, canv.width / 2, canv.height * 0.75);
     textAlpha -= (1.0 / TEXT_FADE_TIME / FPS);
   } else if (ship.dead) {
-    // Ao invés de reiniciar automaticamente, exibe o botão "Play Again"
+    // Exibe o botão "Play Again" quando o jogo termina
     document.getElementById("playAgainBtn").classList.remove("hidden");
     return; // Pausa o restante da atualização
   }
