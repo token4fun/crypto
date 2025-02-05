@@ -66,8 +66,9 @@
   <!-- Botão de Play Again (inicialmente oculto) -->
   <button id="playAgainBtn" class="button hidden">Play Again</button>
 
-  <!-- Botão para ativar/desativar o som (fica abaixo do canvas) -->
-  <button id="soundToggleBtn" class="button">Sound: On</button>
+  <!-- Botões para ativar/desativar o som -->
+  <button id="musicToggleBtn" class="button">Music: On</button>
+  <button id="sfxToggleBtn" class="button">SFX: On</button>
 
   <!-- Footer -->
   <footer id="gameFooter">
@@ -83,7 +84,6 @@
     const instructionsModal = document.getElementById('instructionsModal');
     const startGameBtn = document.getElementById('startGameBtn');
 
-    // Splash animation
     window.addEventListener('load', function() {
       setTimeout(function() {
         splashModal.classList.add('hidden');
@@ -95,8 +95,10 @@
 
     startGameBtn.addEventListener('click', function() {
       instructionsModal.classList.add('hidden');
-      // Inicia a música (ou retoma a reprodução) após o clique do usuário
-      music.play();
+      // Inicia a música (ou retoma a reprodução) após a interação do usuário
+      if (MUSIC_ON) {
+        music.play();
+      }
     });
 
     // --- DOCS Modal ---
@@ -111,19 +113,25 @@
       docsModal.classList.add('hidden');
     });
 
-    // --- Botão de ativação/desativação do som ---
-    const soundToggleBtn = document.getElementById('soundToggleBtn');
-    soundToggleBtn.addEventListener('click', function() {
-      // Alterna os estados de música e efeitos sonoros
+    // --- Botões de ativação/desativação do som ---
+    const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const sfxToggleBtn = document.getElementById('sfxToggleBtn');
+
+    musicToggleBtn.addEventListener('click', function() {
       MUSIC_ON = !MUSIC_ON;
-      SOUND_ON = !SOUND_ON;
-      // Se desativado, interrompe a música imediatamente
+      // Se a música for desativada, interrompe a reprodução imediatamente
       if (!MUSIC_ON) {
-        music.soundLow.pause();
-        music.soundHigh.pause();
+        music.stopAll();
+      } else {
+        // Se for ativada, retoma a reprodução
+        music.play();
       }
-      // Atualiza o texto do botão conforme o estado
-      this.textContent = MUSIC_ON ? "Sound: On" : "Sound: Off";
+      this.textContent = MUSIC_ON ? "Music: On" : "Music: Off";
+    });
+
+    sfxToggleBtn.addEventListener('click', function() {
+      SOUND_ON = !SOUND_ON;
+      this.textContent = SOUND_ON ? "SFX: On" : "SFX: Off";
     });
   </script>
 </body>
