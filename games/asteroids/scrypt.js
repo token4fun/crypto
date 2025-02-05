@@ -24,7 +24,7 @@ const SHIP_TURN_SPD = 360;
 const SHOW_BOUNDING = false;
 const SHOW_CENTRE_DOT = false;
 
-// Alteramos para variáveis para que possam ser modificadas
+// Variáveis para controle do áudio
 var MUSIC_ON = true;
 var SOUND_ON = true;
 
@@ -84,9 +84,11 @@ function Music(srcLow, srcHigh) {
       this.low = !this.low;
     }
   }
+  
   this.setAsteroidRatio = function(ratio) {
     this.tempo = 1.0 - 0.75 * (1.0 - ratio);
   }
+  
   this.tick = function() {
     if (this.beatTime === 0) {
       this.play();
@@ -95,6 +97,7 @@ function Music(srcLow, srcHigh) {
       this.beatTime--;
     }
   }
+  
   // Método para interromper a reprodução da música imediatamente
   this.stopAll = function() {
     this.soundLow.pause();
