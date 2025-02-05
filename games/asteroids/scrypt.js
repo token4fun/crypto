@@ -23,8 +23,11 @@ const SHIP_THRUST = 5;
 const SHIP_TURN_SPD = 360;
 const SHOW_BOUNDING = false;
 const SHOW_CENTRE_DOT = false;
-const MUSIC_ON = true;
-const SOUND_ON = true;
+
+// Alteramos para variáveis para que possam ser modificadas
+var MUSIC_ON = true;
+var SOUND_ON = true;
+
 const TEXT_FADE_TIME = 2.5;
 const TEXT_SIZE = 35;
 
@@ -33,11 +36,9 @@ var canv = document.getElementById("gameCanvas");
 var ctx = canv.getContext("2d");
 
 // CONFIGURAÇÃO DE IMAGENS E EFEITOS NEON
-// Corrigindo: definir a variável shipImg corretamente
 var shipImg = new Image();
 shipImg.src = "Ship.png";
 
-// Asteroids images (crypto1.png a crypto8.png)
 var cryptoImgs = [];
 var cryptoSrcs = [
   "crypto1.png", "crypto2.png", "crypto3.png", "crypto4.png",
@@ -65,31 +66,13 @@ var fxHit = new Sound("hit.m4a", 5);
 var fxLaser = new Sound("laser.m4a", 5, 0.5);
 var fxThrust = new Sound("thrust.m4a");
 
-// Atualização na função Music com método unlock() para contornar restrições de autoplay
+// Função Music conforme a versão que está funcionando
 function Music(srcLow, srcHigh) {
-  // Se srcHigh não for fornecido, usar srcLow para ambos os sons
-  if (!srcHigh) { srcHigh = srcLow; }
   this.soundLow = new Audio(srcLow);
   this.soundHigh = new Audio(srcHigh);
   this.low = true;
   this.tempo = 1.0;
   this.beatTime = 0;
-  
-  // Método para desbloquear a reprodução de áudio após uma interação do usuário.
-  // Tenta reproduzir e imediatamente pausar o áudio para "desbloquear" a reprodução futura.
-  this.unlock = function() {
-    this.soundLow.play().then(() => {
-      this.soundLow.pause();
-      this.soundLow.currentTime = 0;
-    }).catch((e) => console.log("Erro ao desbloquear soundLow:", e));
-    
-    this.soundHigh.play().then(() => {
-      this.soundHigh.pause();
-      this.soundHigh.currentTime = 0;
-    }).catch((e) => console.log("Erro ao desbloquear soundHigh:", e));
-  }
-  
-  // Método que toca os sons alternadamente
   this.play = function() {
     if (MUSIC_ON) {
       if (this.low) {
@@ -100,13 +83,9 @@ function Music(srcLow, srcHigh) {
       this.low = !this.low;
     }
   }
-  
-  // Ajusta o tempo de reprodução conforme a proporção dos asteroides restantes
   this.setAsteroidRatio = function(ratio) {
     this.tempo = 1.0 - 0.75 * (1.0 - ratio);
   }
-  
-  // Tick da música: a cada frame, se o tempo de batida for zero, toca o som e reinicia o contador
   this.tick = function() {
     if (this.beatTime === 0) {
       this.play();
@@ -441,9 +420,7 @@ function update() {
     ctx.fillText(text, canv.width / 2, canv.height * 0.75);
     textAlpha -= (1.0 / TEXT_FADE_TIME / FPS);
   } else if (ship.dead) {
-    // Exibe o botão "Play Again" quando o jogo termina
-    document.getElementById("playAgainBtn").classList.remove("hidden");
-    return; // Pausa o restante da atualização
+    newGame();
   }
   
   for (var i = 0; i < lives; i++) {
@@ -534,8 +511,6 @@ function update() {
 
 // Evento para o botão "Play Again"
 document.getElementById("playAgainBtn").addEventListener("click", function() {
-  // Oculta o botão novamente
   this.classList.add("hidden");
-  // Reinicia o jogo (iniciando com 3 vidas, conforme GAME_LIVES)
   newGame();
 });
