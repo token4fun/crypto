@@ -91,11 +91,15 @@
       setTimeout(function() {
         instructionsModal.classList.remove('hidden');
       }, 3500);
+      // Tenta iniciar a música automaticamente ao carregar a página
+      if (MUSIC_ON) {
+        music.play();
+      }
     });
 
     startGameBtn.addEventListener('click', function() {
       instructionsModal.classList.add('hidden');
-      // Inicia a música (ou retoma a reprodução) após a interação do usuário
+      // Se a música estiver ativada, tente retomar a reprodução
       if (MUSIC_ON) {
         music.play();
       }
@@ -119,11 +123,9 @@
 
     musicToggleBtn.addEventListener('click', function() {
       MUSIC_ON = !MUSIC_ON;
-      // Se a música for desativada, interrompe a reprodução imediatamente
       if (!MUSIC_ON) {
         music.stopAll();
       } else {
-        // Se for ativada, retoma a reprodução
         music.play();
       }
       this.textContent = MUSIC_ON ? "Music: On" : "Music: Off";
