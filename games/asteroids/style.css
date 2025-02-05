@@ -277,11 +277,12 @@ canvas {
 }
 
 /* ===================================================================
-   Sound Toggle Button
+   Sound & Music Toggle Buttons
    =================================================================== */
-/* O botão de som já possui a classe "button", mas vamos centralizá-lo abaixo do canvas */
-#soundToggleBtn {
-  margin: 20px auto;
+/* Ambos os botões utilizam a classe "button" e serão centralizados abaixo do canvas */
+#musicToggleBtn,
+#sfxToggleBtn {
+  margin: 10px auto;
   display: block;
 }
 
