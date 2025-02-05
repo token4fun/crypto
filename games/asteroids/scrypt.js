@@ -66,7 +66,7 @@ var fxHit = new Sound("hit.m4a", 5);
 var fxLaser = new Sound("laser.m4a", 5, 0.5);
 var fxThrust = new Sound("thrust.m4a");
 
-// Função Music conforme a versão que está funcionando
+// Função Music – a música começa a ser tocada automaticamente (se permitido)
 function Music(srcLow, srcHigh) {
   this.soundLow = new Audio(srcLow);
   this.soundHigh = new Audio(srcHigh);
