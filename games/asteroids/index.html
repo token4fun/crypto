@@ -122,6 +122,7 @@
     const sfxToggleBtn = document.getElementById('sfxToggleBtn');
 
     musicToggleBtn.addEventListener('click', function() {
+      // Alterna o estado da música
       MUSIC_ON = !MUSIC_ON;
       if (!MUSIC_ON) {
         music.stopAll();
@@ -132,6 +133,7 @@
     });
 
     sfxToggleBtn.addEventListener('click', function() {
+      // Alterna o estado dos efeitos sonoros
       SOUND_ON = !SOUND_ON;
       this.textContent = SOUND_ON ? "SFX: On" : "SFX: Off";
     });
