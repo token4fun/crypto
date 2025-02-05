@@ -91,15 +91,11 @@
       setTimeout(function() {
         instructionsModal.classList.remove('hidden');
       }, 3500);
-      // Tenta iniciar a música automaticamente ao carregar a página
-      if (MUSIC_ON) {
-        music.play();
-      }
     });
 
     startGameBtn.addEventListener('click', function() {
       instructionsModal.classList.add('hidden');
-      // Se a música estiver ativada, tente retomar a reprodução
+      // Inicia a música (ou retoma a reprodução) após a interação do usuário
       if (MUSIC_ON) {
         music.play();
       }
@@ -122,18 +118,18 @@
     const sfxToggleBtn = document.getElementById('sfxToggleBtn');
 
     musicToggleBtn.addEventListener('click', function() {
-      // Alterna o estado da música
       MUSIC_ON = !MUSIC_ON;
+      // Se a música for desativada, interrompe a reprodução imediatamente
       if (!MUSIC_ON) {
         music.stopAll();
       } else {
+        // Se for ativada, retoma a reprodução
         music.play();
       }
       this.textContent = MUSIC_ON ? "Music: On" : "Music: Off";
     });
 
     sfxToggleBtn.addEventListener('click', function() {
-      // Alterna o estado dos efeitos sonoros
       SOUND_ON = !SOUND_ON;
       this.textContent = SOUND_ON ? "SFX: On" : "SFX: Off";
     });
