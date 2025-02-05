@@ -7,7 +7,7 @@
   <!-- Todos os arquivos estão na raiz (/asteroids) -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
-  <!-- Favicon usa logo.png -->
+  <!-- Favicon usa logo1.png -->
   <link rel="icon" href="logo1.png" type="image/x-icon" />
   <title>Crypto Asteroids Battle</title>
 </head>
@@ -66,6 +66,9 @@
   <!-- Botão de Play Again (inicialmente oculto) -->
   <button id="playAgainBtn" class="button hidden">Play Again</button>
 
+  <!-- Botão para ativar/desativar o som (fica na parte inferior do canvas ou no footer) -->
+  <button id="soundToggleBtn" class="button">Sound: On</button>
+
   <!-- Footer -->
   <footer id="gameFooter">
     <span>MVP Games - <a href="https://token4fun.github.io/crypto/" target="_blank">👉🏻 Crypto 4fun 👈🏻</a></span>
@@ -73,7 +76,6 @@
   </footer>
 
   <!-- Scripts -->
-  <!-- Certifique-se de que o arquivo a seguir aponte para o arquivo atualizado -->
   <script src="scrypt.js"></script>
   <script>
     // --- Splash Screen e Instruções ---
@@ -94,6 +96,8 @@
 
     startGameBtn.addEventListener('click', function() {
       instructionsModal.classList.add('hidden');
+      // Inicia a música (ou retome a reprodução) após o clique do usuário
+      music.play();
     });
 
     // --- DOCS Modal ---
@@ -106,6 +110,16 @@
     });
     closeDocsBtn.addEventListener('click', function() {
       docsModal.classList.add('hidden');
+    });
+
+    // --- Botão de ativação/desativação do som ---
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    soundToggleBtn.addEventListener('click', function() {
+      // Alterna os estados de música e efeitos sonoros
+      MUSIC_ON = !MUSIC_ON;
+      SOUND_ON = !SOUND_ON;
+      // Atualiza o texto do botão conforme o estado
+      this.textContent = MUSIC_ON ? "Sound: On" : "Sound: Off";
     });
   </script>
 </body>
