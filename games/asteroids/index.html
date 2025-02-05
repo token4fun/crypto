@@ -66,7 +66,7 @@
   <!-- Botão de Play Again (inicialmente oculto) -->
   <button id="playAgainBtn" class="button hidden">Play Again</button>
 
-  <!-- Botão para ativar/desativar o som (fica na parte inferior do canvas ou no footer) -->
+  <!-- Botão para ativar/desativar o som (fica abaixo do canvas) -->
   <button id="soundToggleBtn" class="button">Sound: On</button>
 
   <!-- Footer -->
@@ -83,12 +83,11 @@
     const instructionsModal = document.getElementById('instructionsModal');
     const startGameBtn = document.getElementById('startGameBtn');
 
-    // Splash animation: after 3 seconds, hide splash (scale down and fade out)
+    // Splash animation
     window.addEventListener('load', function() {
       setTimeout(function() {
         splashModal.classList.add('hidden');
       }, 3000);
-      // Show instructions 500ms after splash is hidden
       setTimeout(function() {
         instructionsModal.classList.remove('hidden');
       }, 3500);
@@ -96,7 +95,7 @@
 
     startGameBtn.addEventListener('click', function() {
       instructionsModal.classList.add('hidden');
-      // Inicia a música (ou retome a reprodução) após o clique do usuário
+      // Inicia a música (ou retoma a reprodução) após o clique do usuário
       music.play();
     });
 
@@ -118,6 +117,11 @@
       // Alterna os estados de música e efeitos sonoros
       MUSIC_ON = !MUSIC_ON;
       SOUND_ON = !SOUND_ON;
+      // Se desativado, interrompe a música imediatamente
+      if (!MUSIC_ON) {
+        music.soundLow.pause();
+        music.soundHigh.pause();
+      }
       // Atualiza o texto do botão conforme o estado
       this.textContent = MUSIC_ON ? "Sound: On" : "Sound: Off";
     });
