@@ -23,8 +23,11 @@ const SHIP_THRUST = 5;
 const SHIP_TURN_SPD = 360;
 const SHOW_BOUNDING = false;
 const SHOW_CENTRE_DOT = false;
-const MUSIC_ON = true;
-const SOUND_ON = true;
+
+// Variáveis para controle do áudio
+var MUSIC_ON = true;
+var SOUND_ON = true;
+
 const TEXT_FADE_TIME = 2.5;
 const TEXT_SIZE = 35;
 
@@ -34,7 +37,7 @@ var ctx = canv.getContext("2d");
 
 // CONFIGURAÇÃO DE IMAGENS E EFEITOS NEON
 var shipImg = new Image();
-shipImg.src = "ship1.png";  // Utilize o nome que funciona no seu projeto
+shipImg.src = "Ship.png";
 
 var cryptoImgs = [];
 var cryptoSrcs = [
@@ -63,7 +66,7 @@ var fxHit = new Sound("hit.m4a", 5);
 var fxLaser = new Sound("laser.m4a", 5, 0.5);
 var fxThrust = new Sound("thrust.m4a");
 
-// Função Music – inicia a música automaticamente se permitido
+// Função Music conforme a versão que está funcionando
 function Music(srcLow, srcHigh) {
   this.soundLow = new Audio(srcLow);
   this.soundHigh = new Audio(srcHigh);
