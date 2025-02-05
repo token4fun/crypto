@@ -73,6 +73,7 @@ function Music(srcLow, srcHigh) {
   this.low = true;
   this.tempo = 1.0;
   this.beatTime = 0;
+  
   this.play = function() {
     if (MUSIC_ON) {
       if (this.low) {
@@ -93,6 +94,13 @@ function Music(srcLow, srcHigh) {
     } else {
       this.beatTime--;
     }
+  }
+  // Método para interromper a reprodução da música imediatamente
+  this.stopAll = function() {
+    this.soundLow.pause();
+    this.soundLow.currentTime = 0;
+    this.soundHigh.pause();
+    this.soundHigh.currentTime = 0;
   }
 }
 
