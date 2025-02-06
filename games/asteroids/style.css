@@ -71,7 +71,7 @@ body::before {
    =================================================================== */
 #gameContainer {
   width: 80%;
-  margin-top: 90px; /* Para dar espaço ao header */
+  margin-top: 90px; /* Espaço para o header */
   position: relative;
 }
 
@@ -273,7 +273,7 @@ body::before {
    =================================================================== */
 canvas {
   display: block;
-  width: 100%; /* O canvas ocupa toda a largura do container */
+  width: 100%;
   height: auto;
   border-radius: 10px;
   z-index: 1;
@@ -282,7 +282,7 @@ canvas {
 }
 
 /* ===================================================================
-   Controles Touch (visíveis apenas em mobile)
+   Controles Touch (visíveis apenas em mobile/tablet)
    =================================================================== */
 #touchControls {
   display: none;
