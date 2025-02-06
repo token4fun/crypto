@@ -1,8 +1,3 @@
-/* Classe para ocultar elementos */
-.hidden {
-  display: none;
-}
-
 /* ===================================================================
    Reset Basics and Global Styles
    =================================================================== */
@@ -30,7 +25,6 @@ body {
 /* ===================================================================
    Background
    =================================================================== */
-/* Uses back2.gif as background */
 body::before {
   content: "";
   position: fixed;
@@ -266,24 +260,72 @@ body::before {
 }
 
 /* ===================================================================
+   Settings Modal
+   =================================================================== */
+#settingsModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-out;
+}
+
+#settingsModal:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#settingsModal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#settingsContent {
+  background: rgba(0, 0, 0, 0.95);
+  border: 3px solid #00eaff;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  max-width: 400px;
+}
+
+#settingsContent h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #00eaff;
+  text-shadow: 0 0 10px #00eaff;
+}
+
+#settingsContent label {
+  font-size: 16px;
+  color: #00eaff;
+}
+
+#settingsContent input[type="range"] {
+  width: 80%;
+}
+
+#settingsContent button {
+  margin-top: 15px;
+}
+
+/* ===================================================================
    Canvas
    =================================================================== */
 canvas {
-  margin-top: 90px; /* Leave space for header */
+  margin-top: 90px; /* Espaço para o header */
   border-radius: 10px;
   z-index: 1;
   border: 3px solid #00eaff;
   box-shadow: 0 0 20px #00eaff;
-}
-
-/* ===================================================================
-   Sound & Music Toggle Buttons
-   =================================================================== */
-/* Ambos os botões utilizam a classe "button" e serão centralizados abaixo do canvas */
-#musicToggleBtn,
-#sfxToggleBtn {
-  margin: 10px auto;
-  display: block;
 }
 
 /* ===================================================================
@@ -367,7 +409,7 @@ canvas {
   #splashTitle {
     font-size: 32px;
   }
-  #instructionsContent, #docsContent {
+  #instructionsContent, #docsContent, #settingsContent {
     max-width: 90%;
     padding: 15px;
   }
@@ -391,10 +433,10 @@ canvas {
   #splashTitle {
     font-size: 28px;
   }
-  #instructionsContent p, #docsContent p {
+  #instructionsContent p, #docsContent p, #settingsContent label {
     font-size: 14px;
   }
-  #startGameBtn, #closeDocsBtn {
+  #startGameBtn, #closeDocsBtn, #closeSettingsBtn {
     font-size: 14px;
     padding: 8px 16px;
   }
