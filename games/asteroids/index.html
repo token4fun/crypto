@@ -18,7 +18,7 @@
     <h1 id="headerTitle">Cakemoon Asteroids Battle</h1>
   </header>
 
-  <!-- Container para centralizar o jogo (80% da largura) -->
+  <!-- Container centralizado (80% da largura) -->
   <div id="gameContainer">
     <!-- Splash Screen -->
     <div id="splashModal">
@@ -33,14 +33,15 @@
       <div id="instructionsContent">
         <h2>How to Play</h2>
         <p>
-          Use the arrow keys or the on-screen buttons to move your ship:<br>
-          - Left: Rotate left<br>
-          - Up: Accelerate<br>
-          - Right: Rotate right<br>
-          - Shoot: Fire lasers
+          On PC use your keyboard:<br>
+          - Left Arrow: Rotate left<br>
+          - Up Arrow: Accelerate<br>
+          - Right Arrow: Rotate right<br>
+          - Space Bar: Fire lasers
         </p>
         <p>
-          You start with 3 lives. Avoid asteroids and destroy them with your lasers!
+          On mobile/tablet, use the on-screen controls below.<br>
+          (You start with 3 lives. Avoid asteroids and destroy them with your lasers!)
         </p>
         <button id="startGameBtn" class="button">Start Game</button>
       </div>
@@ -64,7 +65,7 @@
     <!-- Canvas do Jogo -->
     <canvas id="gameCanvas" width="760" height="570"></canvas>
     
-    <!-- Controles Touch (exibidos apenas em telas pequenas) -->
+    <!-- Controles Touch (apenas em mobile/tablet) -->
     <div id="touchControls">
       <button id="btnLeft" class="touch-btn">◀</button>
       <button id="btnUp" class="touch-btn">▲</button>
@@ -82,7 +83,7 @@
   <!-- Scripts -->
   <script src="game.js"></script>
   <script>
-    // Variáveis para garantir que a música seja iniciada apenas após interação
+    // Variável para garantir que a música seja iniciada apenas uma vez
     let musicStarted = false;
 
     // Splash e Instruções
@@ -101,9 +102,9 @@
 
     startGameBtn.addEventListener('click', () => {
       instructionsModal.classList.add('hidden');
-      if (!musicStarted) {
-        // Força o início da música chamando o tick manualmente
-        document.dispatchEvent(new Event("touchstart"));
+      // Devido às restrições de autoplay, inicie a música após a interação do usuário
+      if (!musicStarted && window.music) {
+        window.music.play();
         musicStarted = true;
       }
     });
@@ -112,7 +113,7 @@
     const docsModal = document.getElementById('docsModal');
     const docsBtn = document.getElementById('docsBtn');
     const closeDocsBtn = document.getElementById('closeDocsBtn');
-
+    
     docsBtn.addEventListener('click', () => {
       docsModal.classList.remove('hidden');
     });
@@ -122,13 +123,12 @@
       });
     }
 
-    // Controles Touch – adiciona listeners para dispositivos móveis
+    // Controles Touch – envia eventos de teclado para simular os comandos
     const btnLeft = document.getElementById('btnLeft');
     const btnUp = document.getElementById('btnUp');
     const btnRight = document.getElementById('btnRight');
     const btnShoot = document.getElementById('btnShoot');
 
-    // Funções auxiliares para disparar eventos de teclado
     function triggerKeyDown(key) {
       const ev = new KeyboardEvent("keydown", { key: key });
       document.dispatchEvent(ev);
@@ -138,7 +138,6 @@
       document.dispatchEvent(ev);
     }
 
-    // Adiciona eventos touchstart e touchend
     btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKeyDown("ArrowLeft"); });
     btnLeft.addEventListener('touchend', (e) => { e.preventDefault(); triggerKeyUp("ArrowLeft"); });
 
