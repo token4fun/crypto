@@ -4,29 +4,29 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Todos os arquivos estão na raiz (/asteroids) -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
-  <!-- Favicon usa logo.png -->
-  <link rel="icon" href="logo.png" type="image/x-icon" />
+  <!-- Favicon -->
+  <link rel="icon" href="assets/logo.png" type="image/x-icon" />
   <title>Cakemoon Asteroids Battle</title>
 </head>
 <body>
-  <!-- Header fixo com a logo e o nome do jogo -->
+  <!-- Header fixo -->
   <header id="gameHeader">
-    <img id="headerLogo" src="logo.png" alt="Logo" />
+    <img id="headerLogo" src="assets/logo.png" alt="Logo" />
     <h1 id="headerTitle">Cakemoon Asteroids Battle</h1>
   </header>
 
-  <!-- Splash Screen (animação inicial) -->
+  <!-- Splash Screen -->
   <div id="splashModal">
     <div id="splashContent">
-      <img id="splashLogo" src="logo.png" alt="Logo Cakemoon Asteroids Battle" />
+      <img id="splashLogo" src="assets/logo.png" alt="Logo Cakemoon Asteroids Battle" />
       <h1 id="splashTitle">Cakemoon Asteroids Battle</h1>
     </div>
   </div>
 
-  <!-- Modal de Instruções (em inglês) -->
+  <!-- Instruções -->
   <div id="instructionsModal" class="hidden">
     <div id="instructionsContent">
       <h2>How to Play</h2>
@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <!-- DOCS Modal (informações sobre o jogo) -->
+  <!-- DOCS Modal -->
   <div id="docsModal" class="hidden">
     <div id="docsContent">
       <h2>About the Game</h2>
@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <!-- Settings Modal (área de configuração) -->
+  <!-- Settings Modal -->
   <div id="settingsModal" class="hidden">
     <div id="settingsContent">
       <h2>Settings</h2>
@@ -96,9 +96,9 @@
   <!-- Scripts -->
   <script src="game.js"></script>
   <script>
-    // Configurações de UI e encaminhamento das preferências para o jogo
+    // Inicialização dos modais e configuração
     (function() {
-      // Inicializa a variável global de configuração
+      // Cria a variável global de configurações
       window.GAME_CONFIG = {
         SOUND_ON: document.getElementById('soundToggle').checked,
         MUSIC_ON: document.getElementById('musicToggle').checked,
@@ -144,7 +144,7 @@
         settingsModal.classList.add('hidden');
       });
 
-      // Atualiza as configurações em tempo real
+      // Atualiza as configurações quando os inputs mudam
       document.getElementById('soundToggle').addEventListener('change', function() {
         window.GAME_CONFIG.SOUND_ON = this.checked;
       });
