@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  // Configurações principais. Agora os valores padrão são substituídos
+  // Configurações principais. Os valores padrão são substituídos
   // pelos parâmetros definidos em window.GAME_CONFIG (caso existam).
   const CONFIG = {
     FPS: 30, 
