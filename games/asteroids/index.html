@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- CSS -->
+  <!-- Estilos -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <!-- Favicon -->
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <!-- Instruções -->
+  <!-- Modal de Instruções -->
   <div id="instructionsModal" class="hidden">
     <div id="instructionsContent">
       <h2>How to Play</h2>
@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <!-- DOCS Modal -->
+  <!-- Modal DOCS -->
   <div id="docsModal" class="hidden">
     <div id="docsContent">
       <h2>About the Game</h2>
@@ -60,138 +60,47 @@
     </div>
   </div>
 
-  <!-- Settings Modal com ajustes finais -->
-  <div id="settingsModal" class="hidden">
-    <div id="settingsContent">
-      <h2>Settings</h2>
-      <label>
-        <input type="checkbox" id="soundToggle" checked>
-        Sound On
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" id="musicToggle" checked>
-        Music On
-      </label>
-      <br>
-      <label>
-        Difficulty:
-        <!-- Valor padrão 0 para manter a quantidade original de asteroides -->
-        <input type="range" id="difficultySlider" min="0" max="10" value="0">
-      </label>
-      <br>
-      <label>
-        Asteroid Speed:
-        <input type="range" id="asteroidSpeedSlider" min="10" max="100" value="50">
-      </label>
-      <br>
-      <label>
-        Ship Thrust:
-        <input type="range" id="shipThrustSlider" min="1" max="10" value="5">
-      </label>
-      <br>
-      <label>
-        Laser Speed:
-        <input type="range" id="laserSpeedSlider" min="100" max="1000" value="500">
-      </label>
-      <br>
-      <label>
-        Show Bounding Box:
-        <input type="checkbox" id="showBoundingToggle">
-      </label>
-      <br>
-      <button id="closeSettingsBtn" class="button">Close</button>
-    </div>
-  </div>
-
-  <!-- Canvas do jogo -->
+  <!-- Canvas do Jogo -->
   <canvas id="gameCanvas" width="760" height="570"></canvas>
 
   <!-- Footer -->
   <footer id="gameFooter">
     <span>MVP Games - Crypto 4 fun</span>
     <button id="docsBtn" class="button">DOCS</button>
-    <button id="settingsBtn" class="button">Settings</button>
   </footer>
 
   <!-- Scripts -->
   <script src="game.js"></script>
   <script>
-    // Inicialização dos modais e configuração
-    (function() {
-      // Cria a variável global de configurações com os parâmetros definidos nos inputs.
-      window.GAME_CONFIG = {
-        SOUND_ON: document.getElementById('soundToggle').checked,
-        MUSIC_ON: document.getElementById('musicToggle').checked,
-        DIFFICULTY: parseInt(document.getElementById('difficultySlider').value, 10),
-        ASTEROID_SPEED: parseInt(document.getElementById('asteroidSpeedSlider').value, 10),
-        SHIP_THRUST: parseInt(document.getElementById('shipThrustSlider').value, 10),
-        LASER_SPD: parseInt(document.getElementById('laserSpeedSlider').value, 10),
-        SHOW_BOUNDING: document.getElementById('showBoundingToggle').checked
-      };
-
-      const splashModal = document.getElementById('splashModal');
-      const instructionsModal = document.getElementById('instructionsModal');
-      const startGameBtn = document.getElementById('startGameBtn');
-      const docsModal = document.getElementById('docsModal');
-      const docsBtn = document.getElementById('docsBtn');
-      const closeDocsBtn = document.getElementById('closeDocsBtn');
-      const settingsModal = document.getElementById('settingsModal');
-      const settingsBtn = document.getElementById('settingsBtn');
-      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          splashModal.classList.add('hidden');
-        }, 3000);
-        setTimeout(function() {
-          instructionsModal.classList.remove('hidden');
-        }, 3500);
-      });
-
-      startGameBtn.addEventListener('click', function() {
-        instructionsModal.classList.add('hidden');
-      });
-
-      docsBtn.addEventListener('click', function() {
-        docsModal.classList.remove('hidden');
-      });
-
-      closeDocsBtn.addEventListener('click', function() {
-        docsModal.classList.add('hidden');
-      });
-
-      settingsBtn.addEventListener('click', function() {
-        settingsModal.classList.remove('hidden');
-      });
-
-      closeSettingsBtn.addEventListener('click', function() {
-        settingsModal.classList.add('hidden');
-      });
-
-      // Atualiza as configurações quando os inputs mudam
-      document.getElementById('soundToggle').addEventListener('change', function() {
-        window.GAME_CONFIG.SOUND_ON = this.checked;
-      });
-      document.getElementById('musicToggle').addEventListener('change', function() {
-        window.GAME_CONFIG.MUSIC_ON = this.checked;
-      });
-      document.getElementById('difficultySlider').addEventListener('change', function() {
-        window.GAME_CONFIG.DIFFICULTY = parseInt(this.value, 10);
-      });
-      document.getElementById('asteroidSpeedSlider').addEventListener('change', function() {
-        window.GAME_CONFIG.ASTEROID_SPEED = parseInt(this.value, 10);
-      });
-      document.getElementById('shipThrustSlider').addEventListener('change', function() {
-        window.GAME_CONFIG.SHIP_THRUST = parseInt(this.value, 10);
-      });
-      document.getElementById('laserSpeedSlider').addEventListener('change', function() {
-        window.GAME_CONFIG.LASER_SPD = parseInt(this.value, 10);
-      });
-      document.getElementById('showBoundingToggle').addEventListener('change', function() {
-        window.GAME_CONFIG.SHOW_BOUNDING = this.checked;
-      });
-    })();
+    // Splash e Instruções
+    const splashModal = document.getElementById('splashModal');
+    const instructionsModal = document.getElementById('instructionsModal');
+    const startGameBtn = document.getElementById('startGameBtn');
+    
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        splashModal.classList.add('hidden');
+      }, 3000);
+      setTimeout(() => {
+        instructionsModal.classList.remove('hidden');
+      }, 3500);
+    });
+    
+    startGameBtn.addEventListener('click', () => {
+      instructionsModal.classList.add('hidden');
+    });
+    
+    // Modal DOCS
+    const docsModal = document.getElementById('docsModal');
+    const docsBtn = document.getElementById('docsBtn');
+    const closeDocsBtn = document.getElementById('closeDocsBtn');
+    
+    docsBtn.addEventListener('click', () => {
+      docsModal.classList.remove('hidden');
+    });
+    closeDocsBtn.addEventListener('click', () => {
+      docsModal.classList.add('hidden');
+    });
   </script>
 </body>
 </html>
