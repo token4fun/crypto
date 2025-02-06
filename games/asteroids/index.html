@@ -7,22 +7,22 @@
   <!-- Todos os arquivos estão na raiz (/asteroids) -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
-  <!-- Favicon usa logo1.png -->
-  <link rel="icon" href="logo1.png" type="image/x-icon" />
-  <title>Crypto Asteroids Battle</title>
+  <!-- Favicon usa logo.png -->
+  <link rel="icon" href="logo.png" type="image/x-icon" />
+  <title>Cakemoon Asteroids Battle</title>
 </head>
 <body>
   <!-- Header fixo com a logo e o nome do jogo -->
   <header id="gameHeader">
-    <img id="headerLogo" src="logo1.png" alt="Logo" />
-    <h1 id="headerTitle">Crypto Asteroids Battle</h1>
+    <img id="headerLogo" src="logo.png" alt="Logo" />
+    <h1 id="headerTitle">Cakemoon Asteroids Battle</h1>
   </header>
 
   <!-- Splash Screen (animação inicial) -->
   <div id="splashModal">
     <div id="splashContent">
-      <img id="splashLogo" src="logo1.png" alt="Logo Asteroids Battle" />
-      <h1 id="splashTitle">Crypto Asteroids Battle</h1>
+      <img id="splashLogo" src="logo.png" alt="Logo Cakemoon Asteroids Battle" />
+      <h1 id="splashTitle">Cakemoon Asteroids Battle</h1>
     </div>
   </div>
 
@@ -50,89 +50,111 @@
     <div id="docsContent">
       <h2>About the Game</h2>
       <p>
-        Crypto Asteroids Battle is a modern, neon-infused reimagining of the classic Atari Asteroids game.<br>
+        Cakemoon Asteroids Battle is a modern, neon-infused reimagining of the classic Atari Asteroids game.<br>
         Enjoy dynamic glow effects, responsive animations, and a futuristic interface designed for the metaverse.
       </p>
       <p>
-        Developed by MVP Games - Wanna a personalized game for your project? <a href="https://t.me/Marcelo_VP" target="_blank"><br>👉🏻 Click Here! 👈🏻</a> It is so cheap!.
+        Developed by MVP Games - Visit <a href="https://t.me/Marcelo_VP" target="_blank">Here</a> for more games.
       </p>
       <button id="closeDocsBtn" class="button">Close</button>
     </div>
   </div>
 
+  <!-- Settings Modal (área de configuração) -->
+  <div id="settingsModal" class="hidden">
+    <div id="settingsContent">
+      <h2>Settings</h2>
+      <label>
+        <input type="checkbox" id="soundToggle" checked>
+        Sound On
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" id="musicToggle" checked>
+        Music On
+      </label>
+      <br>
+      <label>
+        Difficulty:
+        <input type="range" id="difficultySlider" min="1" max="10" value="5">
+      </label>
+      <br>
+      <button id="closeSettingsBtn" class="button">Close</button>
+    </div>
+  </div>
+
   <!-- Canvas do jogo -->
   <canvas id="gameCanvas" width="760" height="570"></canvas>
-  
-  <!-- Botão de Play Again (inicialmente oculto) -->
-  <button id="playAgainBtn" class="button hidden">Play Again</button>
-
-  <!-- Botões para ativar/desativar o som -->
-  <button id="musicToggleBtn" class="button">Music: On</button>
-  <button id="sfxToggleBtn" class="button">SFX: On</button>
 
   <!-- Footer -->
   <footer id="gameFooter">
-    <span>MVP Games - <a href="https://token4fun.github.io/crypto/" target="_blank">👉🏻 Crypto 4fun 👈🏻</a></span>
-    <button id="docsBtn" class="button">Info</button>
+    <span>MVP Games - Crypto 4 fun</span>
+    <button id="docsBtn" class="button">DOCS</button>
+    <button id="settingsBtn" class="button">Settings</button>
   </footer>
 
   <!-- Scripts -->
-  <script src="scrypt.js"></script>
+  <script src="game.js"></script>
   <script>
-    // --- Splash Screen e Instruções ---
-    const splashModal = document.getElementById('splashModal');
-    const instructionsModal = document.getElementById('instructionsModal');
-    const startGameBtn = document.getElementById('startGameBtn');
+    // Configurações de UI e encaminhamento das preferências para o jogo
+    (function() {
+      // Inicializa a variável global de configuração
+      window.GAME_CONFIG = {
+        SOUND_ON: document.getElementById('soundToggle').checked,
+        MUSIC_ON: document.getElementById('musicToggle').checked,
+        DIFFICULTY: parseInt(document.getElementById('difficultySlider').value, 10)
+      };
 
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        splashModal.classList.add('hidden');
-      }, 3000);
-      setTimeout(function() {
-        instructionsModal.classList.remove('hidden');
-      }, 3500);
-    });
+      const splashModal = document.getElementById('splashModal');
+      const instructionsModal = document.getElementById('instructionsModal');
+      const startGameBtn = document.getElementById('startGameBtn');
+      const docsModal = document.getElementById('docsModal');
+      const docsBtn = document.getElementById('docsBtn');
+      const closeDocsBtn = document.getElementById('closeDocsBtn');
+      const settingsModal = document.getElementById('settingsModal');
+      const settingsBtn = document.getElementById('settingsBtn');
+      const closeSettingsBtn = document.getElementById('closeSettingsBtn');
 
-    startGameBtn.addEventListener('click', function() {
-      instructionsModal.classList.add('hidden');
-      // Inicia a música (ou retoma a reprodução) após a interação do usuário
-      if (MUSIC_ON) {
-        music.play();
-      }
-    });
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          splashModal.classList.add('hidden');
+        }, 3000);
+        setTimeout(function() {
+          instructionsModal.classList.remove('hidden');
+        }, 3500);
+      });
 
-    // --- DOCS Modal ---
-    const docsModal = document.getElementById('docsModal');
-    const docsBtn = document.getElementById('docsBtn');
-    const closeDocsBtn = document.getElementById('closeDocsBtn');
+      startGameBtn.addEventListener('click', function() {
+        instructionsModal.classList.add('hidden');
+      });
 
-    docsBtn.addEventListener('click', function() {
-      docsModal.classList.remove('hidden');
-    });
-    closeDocsBtn.addEventListener('click', function() {
-      docsModal.classList.add('hidden');
-    });
+      docsBtn.addEventListener('click', function() {
+        docsModal.classList.remove('hidden');
+      });
 
-    // --- Botões de ativação/desativação do som ---
-    const musicToggleBtn = document.getElementById('musicToggleBtn');
-    const sfxToggleBtn = document.getElementById('sfxToggleBtn');
+      closeDocsBtn.addEventListener('click', function() {
+        docsModal.classList.add('hidden');
+      });
 
-    musicToggleBtn.addEventListener('click', function() {
-      MUSIC_ON = !MUSIC_ON;
-      // Se a música for desativada, interrompe a reprodução imediatamente
-      if (!MUSIC_ON) {
-        music.stopAll();
-      } else {
-        // Se for ativada, retoma a reprodução
-        music.play();
-      }
-      this.textContent = MUSIC_ON ? "Music: On" : "Music: Off";
-    });
+      settingsBtn.addEventListener('click', function() {
+        settingsModal.classList.remove('hidden');
+      });
 
-    sfxToggleBtn.addEventListener('click', function() {
-      SOUND_ON = !SOUND_ON;
-      this.textContent = SOUND_ON ? "SFX: On" : "SFX: Off";
-    });
+      closeSettingsBtn.addEventListener('click', function() {
+        settingsModal.classList.add('hidden');
+      });
+
+      // Atualiza as configurações em tempo real
+      document.getElementById('soundToggle').addEventListener('change', function() {
+        window.GAME_CONFIG.SOUND_ON = this.checked;
+      });
+      document.getElementById('musicToggle').addEventListener('change', function() {
+        window.GAME_CONFIG.MUSIC_ON = this.checked;
+      });
+      document.getElementById('difficultySlider').addEventListener('change', function() {
+        window.GAME_CONFIG.DIFFICULTY = parseInt(this.value, 10);
+      });
+    })();
   </script>
 </body>
 </html>
