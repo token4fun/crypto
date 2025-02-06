@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  // Recupera configurações do modal ou usa valores padrão
+  // Configurações principais. Usa as configurações do modal se definidas.
   const CONFIG = {
     FPS: 30, 
     FRICTION: 0.7,
@@ -28,27 +28,26 @@
     SHIP_TURN_SPD: 360,
     SHOW_BOUNDING: false,
     SHOW_CENTRE_DOT: false,
-    // Usa as configurações definidas na tela, se existirem:
     MUSIC_ON: window.GAME_CONFIG ? window.GAME_CONFIG.MUSIC_ON : true,
     SOUND_ON: window.GAME_CONFIG ? window.GAME_CONFIG.SOUND_ON : true,
     TEXT_FADE_TIME: 2.5,
     TEXT_SIZE: 35,
-    // Exemplo: a dificuldade pode influenciar a quantidade de asteroides
+    // A dificuldade pode influenciar a quantidade de asteroides
     DIFFICULTY: window.GAME_CONFIG ? window.GAME_CONFIG.DIFFICULTY : 5
   };
 
-  /** @type {HTMLCanvasElement} */
+  // Canvas e contexto
   const canv = document.getElementById("gameCanvas");
   const ctx = canv.getContext("2d");
 
-  // Imagens
+  // Carrega imagens dos recursos
   const shipImg = new Image();
-  shipImg.src = "ship.png";
+  shipImg.src = "assets/ship.png";
 
   const cryptoImgs = [];
   const cryptoSrcs = [
-    "crypto1.png", "crypto2.png", "crypto3.png", "crypto4.png",
-    "crypto5.png", "crypto6.png", "crypto7.png", "crypto8.png"
+    "assets/crypto1.png", "assets/crypto2.png", "assets/crypto3.png", "assets/crypto4.png",
+    "assets/crypto5.png", "assets/crypto6.png", "assets/crypto7.png", "assets/crypto8.png"
   ];
   cryptoSrcs.forEach(src => {
     const img = new Image();
@@ -56,7 +55,7 @@
     cryptoImgs.push(img);
   });
 
-  // Funções de efeito neon
+  // Funções de efeitos neon
   const applyGlow = (color = "#00eaff") => {
     ctx.shadowBlur = 20;
     ctx.shadowColor = color;
@@ -121,15 +120,15 @@
   }
 
   // Instâncias de áudio
-  const fxExplode = new Sound("explode.m4a");
-  const fxHit = new Sound("hit.m4a", 5);
-  const fxLaser = new Sound("laser.m4a", 5, 0.5);
-  const fxThrust = new Sound("thrust.m4a");
-  // Se não houver duas trilhas diferentes, usa o mesmo arquivo para low/high
-  const music = new Music("music.m4a", "music.m4a");
+  const fxExplode = new Sound("assets/explode.m4a");
+  const fxHit = new Sound("assets/hit.m4a", 5);
+  const fxLaser = new Sound("assets/laser.m4a", 5, 0.5);
+  const fxThrust = new Sound("assets/thrust.m4a");
+  const music = new Music("assets/music.m4a", "assets/music.m4a");
 
   let roidsLeft, roidsTotal;
   let level, lives, roids, score, scoreHigh, ship, text, textAlpha;
+
   // Inicia o jogo
   const newGame = () => {
     level = 0;
@@ -166,7 +165,7 @@
 
   const createAsteroidBelt = () => {
     roids = [];
-    // Exemplo: a dificuldade pode aumentar a quantidade de asteroides
+    // A dificuldade pode aumentar a quantidade de asteroides
     const asteroidCount = CONFIG.ROID_NUM + level + Math.floor(CONFIG.DIFFICULTY / 5);
     roidsTotal = asteroidCount * 7;
     roidsLeft = roidsTotal;
@@ -250,7 +249,7 @@
     textAlpha = 1.0;
   };
 
-  // Eventos de teclado usando event.key
+  // Eventos de teclado utilizando event.key
   const keyDown = ev => {
     if (ship.dead) return;
     switch (ev.key) {
@@ -308,7 +307,7 @@
     const exploding = ship.explodeTime > 0;
     music.tick();
 
-    // Limpa a tela
+    // Limpa o canvas
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canv.width, canv.height);
 
@@ -330,7 +329,7 @@
       }
     });
 
-    // Processa o efeito de empuxo da nave
+    // Efeito de empuxo da nave
     if (ship.thrusting && !ship.dead) {
       ship.thrust.x += CONFIG.SHIP_THRUST * Math.cos(ship.a) / CONFIG.FPS;
       ship.thrust.y -= CONFIG.SHIP_THRUST * Math.sin(ship.a) / CONFIG.FPS;
@@ -363,7 +362,7 @@
       fxThrust.stop();
     }
 
-    // Desenha a nave ou a explosão
+    // Desenha a nave (ou a explosão, se estiver explodindo)
     if (!exploding) {
       if (blinkOn && !ship.dead) {
         drawShip(ship.x, ship.y, ship.a);
@@ -413,7 +412,7 @@
       }
     });
 
-    // Texto (nível, game over, etc)
+    // Exibe textos (nível, game over, etc.)
     if (textAlpha >= 0) {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -430,7 +429,7 @@
       drawShip(CONFIG.SHIP_SIZE + i * CONFIG.SHIP_SIZE * 1.2, CONFIG.SHIP_SIZE, 0.5 * Math.PI);
     }
 
-    // Desenha a pontuação e high score
+    // Desenha a pontuação e o high score
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#ffffff";
@@ -443,7 +442,7 @@
     ctx.font = `${CONFIG.TEXT_SIZE * 0.75}px Orbitron`;
     ctx.fillText("BEST " + scoreHigh, canv.width / 2, CONFIG.SHIP_SIZE);
 
-    // Colisão: lasers vs asteroides
+    // Verifica colisões entre lasers e asteroides
     for (let i = roids.length - 1; i >= 0; i--) {
       const { x: ax, y: ay, r: ar } = roids[i];
       for (let j = ship.lasers.length - 1; j >= 0; j--) {
@@ -506,7 +505,7 @@
       else if (ship.lasers[i].y > canv.height) ship.lasers[i].y = 0;
     }
 
-    // Atualiza os asteroides
+    // Atualiza os asteroides (screen wrap)
     roids.forEach(roid => {
       roid.x += roid.xv;
       roid.y += roid.yv;
@@ -519,11 +518,11 @@
     requestAnimationFrame(update);
   };
 
-  // Registra eventos de teclado
+  // Registra os eventos de teclado
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
 
-  // Inicia o jogo e o loop
+  // Inicia o jogo e o loop de animação
   newGame();
   requestAnimationFrame(update);
 })();
