@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <!-- Settings Modal -->
+  <!-- Settings Modal com ajustes finais -->
   <div id="settingsModal" class="hidden">
     <div id="settingsContent">
       <h2>Settings</h2>
@@ -77,6 +77,27 @@
       <label>
         Difficulty:
         <input type="range" id="difficultySlider" min="1" max="10" value="5">
+      </label>
+      <br>
+      <!-- Novos ajustes -->
+      <label>
+        Asteroid Speed:
+        <input type="range" id="asteroidSpeedSlider" min="10" max="100" value="50">
+      </label>
+      <br>
+      <label>
+        Ship Thrust:
+        <input type="range" id="shipThrustSlider" min="1" max="10" value="5">
+      </label>
+      <br>
+      <label>
+        Laser Speed:
+        <input type="range" id="laserSpeedSlider" min="100" max="1000" value="500">
+      </label>
+      <br>
+      <label>
+        Show Bounding Box:
+        <input type="checkbox" id="showBoundingToggle">
       </label>
       <br>
       <button id="closeSettingsBtn" class="button">Close</button>
@@ -98,11 +119,15 @@
   <script>
     // Inicialização dos modais e configuração
     (function() {
-      // Cria a variável global de configurações
+      // Cria a variável global de configurações com os novos parâmetros
       window.GAME_CONFIG = {
         SOUND_ON: document.getElementById('soundToggle').checked,
         MUSIC_ON: document.getElementById('musicToggle').checked,
-        DIFFICULTY: parseInt(document.getElementById('difficultySlider').value, 10)
+        DIFFICULTY: parseInt(document.getElementById('difficultySlider').value, 10),
+        ASTEROID_SPEED: parseInt(document.getElementById('asteroidSpeedSlider').value, 10),
+        SHIP_THRUST: parseInt(document.getElementById('shipThrustSlider').value, 10),
+        LASER_SPD: parseInt(document.getElementById('laserSpeedSlider').value, 10),
+        SHOW_BOUNDING: document.getElementById('showBoundingToggle').checked
       };
 
       const splashModal = document.getElementById('splashModal');
@@ -153,6 +178,18 @@
       });
       document.getElementById('difficultySlider').addEventListener('change', function() {
         window.GAME_CONFIG.DIFFICULTY = parseInt(this.value, 10);
+      });
+      document.getElementById('asteroidSpeedSlider').addEventListener('change', function() {
+        window.GAME_CONFIG.ASTEROID_SPEED = parseInt(this.value, 10);
+      });
+      document.getElementById('shipThrustSlider').addEventListener('change', function() {
+        window.GAME_CONFIG.SHIP_THRUST = parseInt(this.value, 10);
+      });
+      document.getElementById('laserSpeedSlider').addEventListener('change', function() {
+        window.GAME_CONFIG.LASER_SPD = parseInt(this.value, 10);
+      });
+      document.getElementById('showBoundingToggle').addEventListener('change', function() {
+        window.GAME_CONFIG.SHOW_BOUNDING = this.checked;
       });
     })();
   </script>
