@@ -67,10 +67,19 @@ body::before {
 }
 
 /* ===================================================================
+   Container do Jogo (80% da largura, centralizado)
+   =================================================================== */
+#gameContainer {
+  width: 80%;
+  margin-top: 90px; /* Para dar espaço ao header */
+  position: relative;
+}
+
+/* ===================================================================
    Splash Screen
    =================================================================== */
 #splashModal {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -127,7 +136,7 @@ body::before {
    Modal de Instruções
    =================================================================== */
 #instructionsModal {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -195,7 +204,7 @@ body::before {
    Modal DOCS
    =================================================================== */
 #docsModal {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -263,11 +272,36 @@ body::before {
    Canvas
    =================================================================== */
 canvas {
-  margin-top: 90px; /* Espaço para o header */
+  display: block;
+  width: 100%; /* O canvas ocupa toda a largura do container */
+  height: auto;
   border-radius: 10px;
   z-index: 1;
   border: 3px solid #00eaff;
   box-shadow: 0 0 20px #00eaff;
+}
+
+/* ===================================================================
+   Controles Touch (visíveis apenas em mobile)
+   =================================================================== */
+#touchControls {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3000;
+}
+
+.touch-btn {
+  background: rgba(0, 0, 0, 0.6);
+  color: #00eaff;
+  border: 2px solid #00eaff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  font-size: 24px;
 }
 
 /* ===================================================================
@@ -338,6 +372,9 @@ canvas {
    Ajustes Responsivos
    =================================================================== */
 @media (max-width: 768px) {
+  #gameContainer {
+    width: 95%;
+  }
   #headerTitle {
     font-size: 24px;
   }
@@ -355,9 +392,10 @@ canvas {
     max-width: 90%;
     padding: 15px;
   }
-  canvas {
-    width: 95%;
-    height: auto;
+  #touchControls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
@@ -381,5 +419,11 @@ canvas {
   #startGameBtn, #closeDocsBtn {
     font-size: 14px;
     padding: 8px 16px;
+  }
+  .touch-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    margin: 5px;
   }
 }
