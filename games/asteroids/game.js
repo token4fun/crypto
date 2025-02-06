@@ -2,8 +2,7 @@
 (() => {
   'use strict';
 
-  // Configurações principais. Os valores padrão são substituídos
-  // pelos parâmetros definidos em window.GAME_CONFIG (caso existam).
+  // Configurações principais – valores originais restaurados.
   const CONFIG = {
     FPS: 30, 
     FRICTION: 0.7,
@@ -33,7 +32,8 @@
     SOUND_ON: window.GAME_CONFIG ? window.GAME_CONFIG.SOUND_ON : true,
     TEXT_FADE_TIME: 2.5,
     TEXT_SIZE: 35,
-    DIFFICULTY: window.GAME_CONFIG ? window.GAME_CONFIG.DIFFICULTY : 5
+    // Usando a dificuldade para ajustar o número de asteroides:
+    DIFFICULTY: window.GAME_CONFIG ? window.GAME_CONFIG.DIFFICULTY : 0
   };
 
   // Canvas e contexto
@@ -79,6 +79,7 @@
     play() {
       if (CONFIG.SOUND_ON) {
         this.streamNum = (this.streamNum + 1) % this.streams.length;
+        this.streams[this.streamNum].currentTime = 0;
         this.streams[this.streamNum].play();
       }
     }
@@ -99,8 +100,10 @@
     play() {
       if (CONFIG.MUSIC_ON) {
         if (this.low) {
+          this.soundLow.currentTime = 0;
           this.soundLow.play();
         } else {
+          this.soundHigh.currentTime = 0;
           this.soundHigh.play();
         }
         this.low = !this.low;
@@ -165,7 +168,7 @@
 
   const createAsteroidBelt = () => {
     roids = [];
-    // A dificuldade pode aumentar a quantidade de asteroides
+    // A dificuldade agora é aplicada: com DIFFICULTY = 0 o número de asteroides é o original (ROID_NUM + level)
     const asteroidCount = CONFIG.ROID_NUM + level + Math.floor(CONFIG.DIFFICULTY / 5);
     roidsTotal = asteroidCount * 7;
     roidsLeft = roidsTotal;
