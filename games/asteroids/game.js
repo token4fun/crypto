@@ -117,6 +117,8 @@ var fxHit = new Sound("assets/hit.m4a", 5);
 var fxLaser = new Sound("assets/laser.m4a", 5, 0.5);
 var fxThrust = new Sound("assets/thrust.m4a");
 var music = new Music("assets/music.m4a", "assets/music.m4a");
+// Permite acesso global para iniciar a música via interação
+window.music = music;
 
 var roidsLeft, roidsTotal;
 var level, lives, roids, score, scoreHigh, ship, text, textAlpha;
