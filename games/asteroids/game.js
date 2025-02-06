@@ -2,7 +2,8 @@
 (() => {
   'use strict';
 
-  // Configurações principais. Usa as configurações do modal se definidas.
+  // Configurações principais. Agora os valores padrão são substituídos
+  // pelos parâmetros definidos em window.GAME_CONFIG (caso existam).
   const CONFIG = {
     FPS: 30, 
     FRICTION: 0.7,
@@ -10,29 +11,28 @@
     LASER_DIST: 0.6,
     LASER_EXPLODE_DUR: 0.1,
     LASER_MAX: 10,
-    LASER_SPD: 500,
+    LASER_SPD: window.GAME_CONFIG ? window.GAME_CONFIG.LASER_SPD : 500,
     ROID_JAG: 0.4,
     ROID_PTS_LGE: 20,
     ROID_PTS_MED: 50,
     ROID_PTS_SML: 100,
     ROID_NUM: 3,
     ROID_SIZE: 100,
-    ROID_SPD: 50,
+    ROID_SPD: window.GAME_CONFIG ? window.GAME_CONFIG.ASTEROID_SPEED : 50,
     ROID_VERT: 10,
     SAVE_KEY_SCORE: "highscore",
     SHIP_BLINK_DUR: 0.1,
     SHIP_EXPLODE_DUR: 0.3,
     SHIP_INV_DUR: 3,
     SHIP_SIZE: 30,
-    SHIP_THRUST: 5,
+    SHIP_THRUST: window.GAME_CONFIG ? window.GAME_CONFIG.SHIP_THRUST : 5,
     SHIP_TURN_SPD: 360,
-    SHOW_BOUNDING: false,
+    SHOW_BOUNDING: window.GAME_CONFIG ? window.GAME_CONFIG.SHOW_BOUNDING : false,
     SHOW_CENTRE_DOT: false,
     MUSIC_ON: window.GAME_CONFIG ? window.GAME_CONFIG.MUSIC_ON : true,
     SOUND_ON: window.GAME_CONFIG ? window.GAME_CONFIG.SOUND_ON : true,
     TEXT_FADE_TIME: 2.5,
     TEXT_SIZE: 35,
-    // A dificuldade pode influenciar a quantidade de asteroides
     DIFFICULTY: window.GAME_CONFIG ? window.GAME_CONFIG.DIFFICULTY : 5
   };
 
@@ -40,7 +40,7 @@
   const canv = document.getElementById("gameCanvas");
   const ctx = canv.getContext("2d");
 
-  // Carrega imagens dos recursos
+  // Carrega imagens
   const shipImg = new Image();
   shipImg.src = "assets/ship.png";
 
@@ -55,7 +55,7 @@
     cryptoImgs.push(img);
   });
 
-  // Funções de efeitos neon
+  // Funções de efeito neon
   const applyGlow = (color = "#00eaff") => {
     ctx.shadowBlur = 20;
     ctx.shadowColor = color;
@@ -362,7 +362,7 @@
       fxThrust.stop();
     }
 
-    // Desenha a nave (ou a explosão, se estiver explodindo)
+    // Desenha a nave ou a explosão
     if (!exploding) {
       if (blinkOn && !ship.dead) {
         drawShip(ship.x, ship.y, ship.a);
