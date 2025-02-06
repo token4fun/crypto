@@ -203,17 +203,21 @@ function gameOver() {
 
 function keyDown(ev) {
   if (ship.dead) return;
-  switch (ev.keyCode) {
+  switch (ev.keyCode || ev.key) {
     case 32:
+    case " ":
       shootLaser();
       break;
     case 37:
+    case "ArrowLeft":
       ship.rot = SHIP_TURN_SPD / 180 * Math.PI / FPS;
       break;
     case 38:
+    case "ArrowUp":
       ship.thrusting = true;
       break;
     case 39:
+    case "ArrowRight":
       ship.rot = -SHIP_TURN_SPD / 180 * Math.PI / FPS;
       break;
   }
@@ -221,17 +225,21 @@ function keyDown(ev) {
 
 function keyUp(ev) {
   if (ship.dead) return;
-  switch (ev.keyCode) {
+  switch (ev.keyCode || ev.key) {
     case 32:
+    case " ":
       ship.canShoot = true;
       break;
     case 37:
+    case "ArrowLeft":
       ship.rot = 0;
       break;
     case 38:
+    case "ArrowUp":
       ship.thrusting = false;
       break;
     case 39:
+    case "ArrowRight":
       ship.rot = 0;
       break;
   }
@@ -507,4 +515,14 @@ function update() {
     if (roids[i].y < 0 - roids[i].r) roids[i].y = canv.height + roids[i].r;
     else if (roids[i].y > canv.height + roids[i].r) roids[i].y = 0 - roids[i].r;
   }
+  
+  requestAnimationFrame(update);
 }
+
+// Registra os eventos de teclado
+document.addEventListener("keydown", keyDown);
+document.addEventListener("keyup", keyUp);
+
+// Inicia o jogo e o loop de animação
+newGame();
+requestAnimationFrame(update);
