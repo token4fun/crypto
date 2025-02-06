@@ -76,10 +76,10 @@
       <br>
       <label>
         Difficulty:
-        <input type="range" id="difficultySlider" min="1" max="10" value="5">
+        <!-- Valor padrão 0 para manter a quantidade original de asteroides -->
+        <input type="range" id="difficultySlider" min="0" max="10" value="0">
       </label>
       <br>
-      <!-- Novos ajustes -->
       <label>
         Asteroid Speed:
         <input type="range" id="asteroidSpeedSlider" min="10" max="100" value="50">
@@ -119,7 +119,7 @@
   <script>
     // Inicialização dos modais e configuração
     (function() {
-      // Cria a variável global de configurações com os novos parâmetros
+      // Cria a variável global de configurações com os parâmetros definidos nos inputs.
       window.GAME_CONFIG = {
         SOUND_ON: document.getElementById('soundToggle').checked,
         MUSIC_ON: document.getElementById('musicToggle').checked,
