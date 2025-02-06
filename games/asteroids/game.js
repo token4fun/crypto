@@ -42,7 +42,7 @@
 
   // Carrega imagens
   const shipImg = new Image();
-  shipImg.src = "assets/ship.png";
+  shipImg.src = "assets/Ship.png";
 
   const cryptoImgs = [];
   const cryptoSrcs = [
