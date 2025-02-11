@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Top Sniper & Trading Bots on Telegram</title>
-<style>
+<!-- <style>
     /* Estilo moderno com fundo escuro e texto em laranja neon */
     body {
         margin: 0;
@@ -277,6 +277,249 @@
     }
 }
 
+</style> -->
+<style>
+    /* Estilo base da página */
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #0f0f0f 0%, #1b1b1b 50%, #2b2b2b 100%);
+        color: #fff;
+        text-align: center;
+        overflow-x: hidden;  /* Evita rolagem horizontal */
+        overflow-y: auto;    /* Permite rolagem vertical */
+    }
+
+    /* Ticker de Criptomoedas */
+    .crypto-ticker {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        overflow: hidden;
+        background: linear-gradient(90deg, #1e1e1e, #2a2a2a);
+        padding: 15px 0;
+        font-size: 20px;
+        color: #00ffcc;
+        font-weight: bold;
+        text-align: center;
+        z-index: 1000;
+        border-bottom: 2px solid #00f0ff;
+    }
+
+    /* Estilos para valores positivos/negativos */
+    .positive {
+        color: #00ffcc;
+    }
+    .negative {
+        color: #ff4c4c;
+    }
+
+    /* Nova animação para efeito neon azul rotativo */
+    @keyframes neon-rotate {
+        0% {
+            text-shadow: 0 0 20px #00f0ff, 0 0 40px #0077ff, 0 0 60px #00f0ff;
+        }
+        25% {
+            text-shadow: 0 0 20px #00c0ff, 0 0 40px #0090ff, 0 0 60px #00c0ff;
+        }
+        50% {
+            text-shadow: 0 0 20px #0080ff, 0 0 40px #0050ff, 0 0 60px #0080ff;
+        }
+        75% {
+            text-shadow: 0 0 20px #00c0ff, 0 0 40px #0090ff, 0 0 60px #00c0ff;
+        }
+        100% {
+            text-shadow: 0 0 20px #00f0ff, 0 0 40px #0077ff, 0 0 60px #00f0ff;
+        }
+    }
+
+    /* Título com neon azul e animação de rotação */
+    .page-title {
+        font-size: 48px;
+        font-weight: bold;
+        margin-top: 100px;
+        color: #00f0ff;
+        text-shadow: 0 0 20px #00f0ff, 0 0 40px #0077ff, 0 0 60px #00f0ff;
+        animation: neon-rotate 1.5s infinite alternate;
+    }
+
+    /* Subtítulo com neon azul e animação de rotação */
+    .page-description {
+        font-size: 22px;
+        color: #00f0ff;
+        max-width: 800px;
+        margin: 0 auto;
+        text-shadow: 0 0 20px #00f0ff, 0 0 40px #0077ff, 0 0 60px #00f0ff;
+        animation: neon-rotate 1.5s infinite alternate;
+    }
+
+    /* Logo com efeito de flutuação e neon azul */
+    .floating-logo {
+        width: 200px;
+        height: auto;
+        animation: float 3s ease-in-out infinite, neon-glow-blue 1.5s infinite alternate;
+        filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 20px #0077ff) drop-shadow(0 0 30px #00f0ff);
+    }
+
+    /* Botões (links estilizados) – sem sublinhado e com neon azul */
+    .btn, .bot-link {
+        padding: 10px 20px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        display: inline-block;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;  /* Garante que o link não apareça sublinhado */
+        border: 2px solid #00f0ff;
+        border-radius: 8px;
+        text-shadow: 0 0 10px #00f0ff;
+        box-shadow: 0 0 20px #00f0ff;
+        transition: all 0.3s ease;
+    }
+    .btn:hover, .bot-link:hover {
+        background: #00f0ff;
+        box-shadow: 0 0 40px #0077ff;
+    }
+
+    /* Containers e seções dos bots */
+    .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 10px;
+    }
+    .bot-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 1px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        border: 2px solid #00f0ff;
+        transition: all 0.4s ease;
+    }
+    .bot-section:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+    }
+    .bot-section img {
+        max-width: 150px;
+        border-radius: 15px;
+        border: 3px solid #00f0ff;
+    }
+    .bot-info {
+        flex: 1;
+        padding-left: 30px;
+    }
+    .bot-info h2 {
+        font-size: 28px;
+        color: #00f0ff;
+        animation: neon-rotate 1.5s infinite alternate;
+    }
+    .bot-info p {
+        font-size: 18px;
+        opacity: 0.8;
+    }
+
+    /* Botão de Contato no Telegram com gradiente azul */
+    .telegram-btn {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background: linear-gradient(90deg, #00aaff, #00f0ff);
+        color: white;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 50px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 0 10px rgba(0, 160, 255, 0.6);
+        transition: all 0.3s ease;
+    }
+    .telegram-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(0, 160, 255, 0.9);
+    }
+
+    /* Rodapé com assinatura em neon azul */
+    .footer {
+        text-align: center;
+        color: #00f0ff;
+        padding: 20px;
+        font-size: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        border-top: 2px solid #00f0ff;
+    }
+
+    /* Animações e estilos adicionais para PCs */
+    @media (min-width: 769px) {
+        /* Animação de flutuação */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        /* Animação de brilho neon azul aplicada à logo */
+        @keyframes neon-glow-blue {
+            from {
+                filter: drop-shadow(0 0 2px #00f0ff) drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff);
+            }
+            to {
+                filter: drop-shadow(0 0 5px #0077ff) drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 20px #0077ff);
+            }
+        }
+    }
+
+    /* Responsividade para telas menores (mobile) */
+    @media (max-width: 768px) {
+        .container {
+            padding: 5px;
+        }
+        .bot-section {
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .bot-section img {
+            max-width: 80%; /* Ajusta o tamanho das imagens para 80% da largura da tela */
+            height: auto;
+        }
+        .bot-info {
+            padding-left: 0;
+            text-align: center;
+        }
+        .page-title {
+            font-size: 30px;
+        }
+        .page-description {
+            font-size: 18px;
+        }
+        .bot-info h2 {
+            font-size: 24px;
+        }
+        .bot-info p {
+            font-size: 16px;
+        }
+        .btn, .bot-link {
+            padding: 10px 20px;
+            font-size: 16px;
+            width: 100%;
+        }
+        .telegram-btn {
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+    }
 </style>
 
 </head>
