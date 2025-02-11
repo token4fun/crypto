@@ -314,24 +314,51 @@
         color: #ff4c4c;
     }
 
-    /* Nova animação para efeito neon azul rotativo */
-    @keyframes neon-rotate {
-        0% {
-            text-shadow: 0 0 20px #00f0ff, 0 0 40px #0077ff, 0 0 60px #00f0ff;
-        }
-        25% {
-            text-shadow: 0 0 20px #00c0ff, 0 0 40px #0090ff, 0 0 60px #00c0ff;
-        }
-        50% {
-            text-shadow: 0 0 20px #0080ff, 0 0 40px #0050ff, 0 0 60px #0080ff;
-        }
-        75% {
-            text-shadow: 0 0 20px #00c0ff, 0 0 40px #0090ff, 0 0 60px #00c0ff;
-        }
-        100% {
-            text-shadow: 0 0 20px #00f0ff, 0 0 40px #0077ff, 0 0 60px #00f0ff;
-        }
-    }
+    /* Animação para borda neon giratória */
+@keyframes neon-border-rotate {
+  0% {
+    border-color: #00f0ff;
+    box-shadow: 0 0 30px #00f0ff;
+  }
+  25% {
+    border-color: #00c0ff;
+    box-shadow: 0 0 30px #00c0ff;
+  }
+  50% {
+    border-color: #0080ff;
+    box-shadow: 0 0 30px #0080ff;
+  }
+  75% {
+    border-color: #00c0ff;
+    box-shadow: 0 0 30px #00c0ff;
+  }
+  100% {
+    border-color: #00f0ff;
+    box-shadow: 0 0 30px #00f0ff;
+  }
+}
+
+/* Seção de conteúdo com efeito neon azul giratório na borda */
+.bot-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+  border: 2px solid #00f0ff;
+  transition: all 0.4s ease;
+  /* Aplica a animação de borda neon giratória */
+  animation: neon-border-rotate 2s infinite alternate;
+}
+
+.bot-section:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+}
+
 
     /* Título com neon azul e animação de rotação */
     .page-title {
@@ -388,22 +415,7 @@
         margin: 30px auto;
         padding: 10px;
     }
-    .bot-section {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin-bottom: 1px;
-        padding: 15px;
-        background: rgba(0, 0, 0, 0.8);
-        border-radius: 20px;
-        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-        border: 2px solid #00f0ff;
-        transition: all 0.4s ease;
-    }
-    .bot-section:hover {
-        transform: translateY(-5px) scale(1.03);
-        box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
-    }
+
     .bot-section img {
         max-width: 150px;
         border-radius: 15px;
