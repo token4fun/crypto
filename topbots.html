@@ -380,7 +380,7 @@ Ticker de Criptomoedas
 <script>
     async function fetchCryptoPrices() {
         try {
-            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,cardano,xrp,dogecoin,tron,polkadot,shiba-inu,official-trump&vs_currencies=usd&include_24hr_change=true');
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,xrp,dogecoin,tron,sui&vs_currencies=usd&include_24hr_change=true');
             if (!response.ok) throw new Error('Failed to fetch prices.');
             const data = await response.json();
 
